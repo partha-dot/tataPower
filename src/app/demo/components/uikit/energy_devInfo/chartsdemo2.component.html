@@ -1,0 +1,78 @@
+
+            <div class="col-12 md:col-12" >
+                <div style="float: right;">
+                    <p-autoComplete [(ngModel)]="selectedDealer" [ngModelOptions]="{standalone: true}" placeholder="Select Device" (onSelect)="setDevice()" [suggestions]="filteredDealer" (completeMethod)="filterDealer($event)" field="device" [dropdown]="true">
+                    </p-autoComplete>
+                </div>
+            </div>
+
+            <div class="col-12 lg:col-6 xl:col-12"  >
+                <h6>Map View</h6>
+                <div class="card">
+                    <div id="map"></div>
+                </div>
+
+            </div>
+                <div class="grid">
+                    <div class="col-12 md:col-6 xl:col-12">
+                        <div class="card" style="height: 360px!important;background-color: white;">
+                            <h4>Description</h4><br><br>
+                            <b>Device Name</b><p style="float: right;">{{data1?.device}}</p><hr>
+                            <b>Model Name</b><p style="float: right;">{{data1?.model}}</p><hr>
+                            <b>IMEI NO</b><p style="float: right;"> {{data1?.imei_no}} </p><hr>
+                            <b>Specifications </b><p style="float: right;">{{data1?.device?"Energy":''}} </p><hr>
+                            <b>Last Maintenance </b><p style="float: right;">{{data1?.last_maintenance}}</p>
+                        </div>
+                    </div>
+                    <!-- <div class="col-12 md:col-6 xl:col-6">
+                        <div class="card" >
+                            <h4>Alert Information</h4>
+                            <div >
+                                <div class="field">
+                                    <p-dropdown [(ngModel)]="selectedAlert" (onChange)="abc()" [options]="cities2" optionLabel="unit_name" placeholder="Select alert type" ></p-dropdown>
+                                </div>
+                                <div class="flex justify-content-between mb-3" >
+                                    <table >
+
+                                        <tr >
+                                        <th style="text-align: left;"><i class="pi pi-info-circle text-yellow-500 text-xl">&nbsp;&nbsp;</i> High Alert</th>
+                                        <th>{{h_val}}</th>
+                                        </tr>
+
+                                        <tr >
+                                        <th style="text-align: left;"><i class="pi pi-info-circle text-red-500 text-xl">&nbsp;&nbsp;</i>Cretical High Alert</th>
+                                        <th>{{ch_val}}</th>
+                                        </tr>
+                                        <tr >
+                                            <th style="text-align: left;"><i class="pi pi-info-circle text-yellow-500 text-xl">&nbsp;&nbsp;</i> Low Alert</th>
+                                            <th>{{l_val}}</th>
+                                        </tr>
+                                        <tr >
+                                            <th style="text-align: left;"><i class="pi pi-info-circle text-red-500 text-xl">&nbsp;&nbsp;</i> Cretical Low Alert</th>
+                                            <th>{{cl_val}}</th>
+                                        </tr>
+
+                                        </table>
+                                        <br>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div> -->
+
+
+                </div>
+
+
+
+
+
+
+                <div class="loader" *ngIf="spinner">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div><div class="overlay" *ngIf="spinner"></div>

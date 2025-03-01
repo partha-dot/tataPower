@@ -1,0 +1,6 @@
+{
+    "/api": {
+"target": "https://wsapi.iotblitz.com",
+"secure": false
+}
+  }

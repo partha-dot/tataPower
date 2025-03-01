@@ -1,0 +1,463 @@
+<!-- <div class="grid p-fluid"> -->
+    <!-- <div class="col-12 lg:col-12">
+        <div class="card">
+            <div class="p-fluid p-formgrid grid">
+                <div class="field col-12 md:col-3">
+                    <label htmlFor="lastname2">Site Name</label>
+                    <input pInputText  type="text" />
+                </div>
+                <div class="field col-12 md:col-2">
+                    <label htmlFor="lastname2">Capacity (HP)</label>
+                    <input pInputText  type="text" />
+                </div>
+                <div class="field col-12 md:col-2">
+                    <label htmlFor="lastname2">Date of Installation</label>
+						<span class="p-input-icon-right">
+						<p-calendar dateFormat="dd/mm/yy" [showButtonBar]="true"></p-calendar>
+						<i class="pi pi-calendar"></i>
+						</span>
+                </div>
+                <div class="field col-12 md:col-1">
+                    <label htmlFor="lastname2">Log (min)</label>
+                    <input pInputText  type="text" />
+                </div>
+                <div class="field col-12 md:col-1" style="margin-top: 2%;">
+                    <p-button styleClass="p-button-primary " label="Update"></p-button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    -->
+    <!-- <div class="col-12 lg:col-12"> -->
+    <!-- <div class="card" style="padding: 0!important;"> -->
+        <div class="grid" style="margin-left: 0rem!important;">
+
+            <!-- <div class="col-12 lg:col-2 xl:col-1">
+                <div class="livenow">
+                  <div></div>
+                  <h5>Live</h5>
+                </div>
+           </div> -->
+
+           <!-- <div class="col-12 lg:col-2 xl:col-7"> -->
+           <!-- <div class="col-12 lg:col-1 xl:col-1">
+            <sp2n >Run Time</span>
+            <div class="text-900 font-medium text-xl">2.8 Hrs</div>
+           </div>  -->
+
+           <div class="col-12 md:col-12" >
+            <div style="float: left;padding-top: 10px;padding-left: 1%" *ngIf="WeatherData" >  <h5 style="font-size: large;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;  Date: {{WeatherData?.date | date:'dd/MM/yyyy'}} &nbsp;Time: {{WeatherData.time}} </h5>
+            </div>
+
+            <div style="float: right;">
+                <!-- <h5 style="font-size: large;">
+                    Date: {{WeatherData?.date | date:'dd/MM/yyyy'}} &nbsp;Time: {{WeatherData.time}} </h5> -->
+                <!-- <h4 >Last Updated: {{lastUpdateTime}}</h4> -->
+                <span style="font-weight: 800;">Signal Strength: {{convertToPercentage(WeatherData?.tw?WeatherData?.tw:0)| number:'1.2-2' }}%</span>
+                <i class="icon__signal-strength signal-0" *ngIf="(!WeatherData?.tw)||WeatherData?.tw==0">
+                    <span class="bar-1"></span>
+                    <span class="bar-2"></span>
+                    <span class="bar-3"></span>
+                    <span class="bar-4"></span>
+                </i>
+                <i class="icon__signal-strength signal-1" *ngIf="convertToPercentage(WeatherData?.tw) >=1 && convertToPercentage(WeatherData?.tw) <=25">
+                    <span class="bar-1"></span>
+                    <span class="bar-2"></span>
+                    <span class="bar-3"></span>
+                    <span class="bar-4"></span>
+                </i>
+                <i class="icon__signal-strength signal-2" *ngIf="convertToPercentage(WeatherData?.tw) >=26 && convertToPercentage(WeatherData?.tw) <=50">
+                    <span class="bar-1"></span>
+                    <span class="bar-2"></span>
+                    <span class="bar-3"></span>
+                    <span class="bar-4"></span>
+                </i>
+                <i class="icon__signal-strength signal-3" *ngIf="convertToPercentage(WeatherData?.tw) >=51 && convertToPercentage(WeatherData?.tw) <=75">
+                    <span class="bar-1"></span>
+                    <span class="bar-2"></span>
+                    <span class="bar-3"></span>
+                    <span class="bar-4"></span>
+                </i>
+                <i  class="icon__signal-strength signal-4" *ngIf="convertToPercentage(WeatherData?.tw)>75">
+                    <span class="bar-1"></span>
+                    <span class="bar-2"></span>
+                    <span class="bar-3"></span>
+                    <span class="bar-4"></span>
+                </i>
+                &nbsp;&nbsp;&nbsp;
+                <!-- <b>Signal Strength</b>: <h3> {{convertToPercentage(WeatherData?.tw)| number:'1.2-2' }}% </h3> -->
+
+                <!-- <p-dropdown *ngIf="this.selectedDealer?.meter_type=='ENTF'"  [options]="cities2" [(ngModel)]="selectedPhase" optionLabel="unit_name" (onChange)="setPhase($event)" placeholder="Select a Phase Type"></p-dropdown>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                <p-autoComplete [(ngModel)]="selectedDealer" [ngModelOptions]="{standalone: true}" placeholder="Select a device" (onSelect)="setDevice()" [suggestions]="filteredDealer" (completeMethod)="filterDealer($event)" field="device" [dropdown]="true">
+                </p-autoComplete>
+            </div>
+            </div>
+            <div class="col-12 md:col-12" >
+
+                <!-- <div class="card"> -->
+                <div class="grid" style="margin-left: 0rem!important;">
+
+                    <div class="col-12 lg:col-6 xl:col-12">
+                        <div class="grid">
+                         <div class="col-12 lg:col-6 xl:col-4">
+                            <div class="card mb-0" style="
+                            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+                            transition: 0.3s;
+                            width: 100%;
+                            border-radius: 10px;
+                            padding: 0px!important;">
+                            <div style="
+                            border-radius: 10px 10px 0 0;
+                            background:linear-gradient(15deg, rgb(83 93 167) 0%, rgb(118, 118, 199) 50%, rgb(88, 78, 167) 100%);
+                            height:40px;" class="tiles__header">
+                            <div style="margin: 10px;
+                            position: absolute;
+                            height: 23px;
+                            width: 23px;">
+                            </div>
+
+                            <div style="text-align:center;">
+                        <h5 style="color: white;"> Phase-I</h5></div>
+                            </div>
+                            <div class="grid">
+                                <div  class="col-12 lg:col-6 xl:col-4">
+                                    <img src="assets/demo/images/icons/dc.png" alt="Image" height="80" width="80" style="padding-top: 10px; padding-left: 10%;">
+
+                                </div>
+                                <div  class="col-12 lg:col-6 xl:col-8">
+                                    <h2 style="padding-top:15%">
+                                        {{temperature}} (V)
+                                    </h2>
+                                </div>
+                            </div>
+
+                            </div>
+
+                        </div>
+                        <div class="col-12 lg:col-6 xl:col-4">
+                            <div class="card mb-0" style="
+                            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+                            transition: 0.3s;
+                            width: 100%;
+                            border-radius: 10px;
+                            padding: 0px!important;">
+                            <div style="
+                            border-radius: 10px 10px 0 0;
+                            background:linear-gradient(15deg, rgb(83 93 167) 0%, rgb(118, 118, 199) 50%, rgb(88, 78, 167) 100%);
+                            height:40px;" class="tiles__header">
+                            <div style="margin: 10px;
+                            position: absolute;
+                            height: 23px;
+                            width: 23px;">
+                                <!-- <i class="pi pi-bolt text-white-600 text-xl" style="position: absolute;padding-top: 3px;padding-left: 2px;"></i> -->
+                            </div>
+
+                            <div style="text-align:center;">
+                        <h5 style="color: white;">  Phase-II</h5></div>
+                            </div>
+                            <div class="grid">
+                                <div  class="col-12 lg:col-6 xl:col-4">
+                                    <img src="assets/demo/images/icons/dc.png" alt="Image" height="80" width="80" style="padding-top: 10px; padding-left: 10%;">
+
+                                </div>
+                                <div  class="col-12 lg:col-6 xl:col-8">
+                                    <h2 style="padding-top:14%">
+                                        {{humidity}} (V)
+                                    </h2>
+                                </div>
+                            </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-12 lg:col-6 xl:col-4">
+                            <div class="card mb-0" style="
+                            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+                            transition: 0.3s;
+                            width: 100%;
+                            border-radius: 10px;
+                            padding: 0px!important;">
+                            <div style="
+                            border-radius: 10px 10px 0 0;
+                            background:linear-gradient(15deg, rgb(83 93 167) 0%, rgb(118, 118, 199) 50%, rgb(88, 78, 167) 100%);
+                            height:40px;" class="tiles__header">
+                            <div style="margin: 10px;
+                            position: absolute;
+                            height: 23px;
+                            width: 23px;">
+                                <!-- <i class="pi pi-calendar-minus text-white-600 text-xl" style="position: absolute;padding-top: 3px;padding-left: 2px;"></i> -->
+                            </div>
+
+                            <div style="text-align:center;">
+                        <h5 style="color: white;">  Phase-III</h5></div>
+                            </div>
+                            <div class="grid">
+                                <div  class="col-12 lg:col-6 xl:col-4">
+                                    <img src="assets/demo/images/icons/dc.png" alt="Image" height="80" width="80" style="padding-top: 10px; padding-left: 10%;">
+
+                                </div>
+                                <div  class="col-12 lg:col-6 xl:col-8">
+                                    <h2 style="padding-top:14%">
+                                        {{atm_pressure}} (V)
+                                    </h2>
+                                </div>
+                            </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-12 lg:col-6 xl:col-4">
+                            <div class="card mb-0" style="
+                            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+                            transition: 0.3s;
+                            width: 100%;
+                            border-radius: 10px;
+                            padding: 0px!important;">
+                            <div style="
+                            border-radius: 10px 10px 0 0;
+                            background:linear-gradient(15deg, rgb(83 93 167) 0%, rgb(118, 118, 199) 50%, rgb(88, 78, 167) 100%);
+                            height:40px;" class="tiles__header">
+                            <div style="margin: 10px;
+                            position: absolute;
+                            height: 23px;
+                            width: 23px;">
+                                <!-- <i class="pi pi-bolt text-white-600 text-xl" style="position: absolute;padding-top: 3px;padding-left: 2px;"></i> -->
+                            </div>
+
+                            <div style="text-align:center;">
+                                <h5 style="color: white;">Phase-I</h5></div>
+                            </div>
+                            <div class="grid">
+                                <div  class="col-12 lg:col-6 xl:col-4">
+                                    <img src="assets/demo/images/icons/ac.png" alt="Image" height="80" width="80" style="padding-top: 10px; padding-left: 10%;" >
+
+                                </div>
+                                <div  class="col-12 lg:col-6 xl:col-8">
+                                    <h2 style="padding-top:14%">
+                                        {{wind_direction}} (V)
+                                    </h2>
+                                </div>
+                            </div>
+
+
+                            </div>
+
+                        </div>
+                        <div class="col-12 lg:col-6 xl:col-4">
+                            <div class="card mb-0" style="
+                            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+                            transition: 0.3s;
+                            width: 100%;
+                            border-radius: 10px;
+                            padding: 0px!important;">
+                            <div style="
+                            border-radius: 10px 10px 0 0;
+                            background:linear-gradient(15deg, rgb(83 93 167) 0%, rgb(118, 118, 199) 50%, rgb(88, 78, 167) 100%);
+                            height:40px;"
+                            class="tiles__header"
+                            >
+                            <div style="margin: 10px;
+                            position: absolute;
+                            height: 23px;
+                            width: 23px;">
+                                <!-- <i class="pi pi-check-circle text-white-600 text-xl" style="position: absolute;padding-top: 3px;padding-left: 2px;"></i> -->
+                            </div>
+
+                            <div style="text-align:center;">
+                            <h5 style="color: white;"> Phase-II</h5></div>
+                            </div>
+                            <div class="grid">
+                                <div  class="col-12 lg:col-6 xl:col-4">
+                                    <img src="assets/demo/images/icons/ac.png" alt="Image" height="80" width="80" style="padding-top: 10px; padding-left: 10%;">
+
+                                </div>
+                                <div  class="col-12 lg:col-6 xl:col-8">
+                                    <h2 style="padding-top:14%">
+                                        {{solar_radiation}} (V)
+                                    </h2>
+                                </div>
+                            </div>
+                            </div>
+
+                        </div>
+                        <!-- second row -->
+                        <div class="col-12 lg:col-6 xl:col-4">
+                            <div class="card mb-0" style="
+                            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+                            transition: 0.3s;
+                            width: 100%;
+                            border-radius: 10px;
+                            padding: 0px!important;">
+                            <div style="
+                            border-radius: 10px 10px 0 0;
+                            background:linear-gradient(15deg, rgb(83 93 167) 0%, rgb(118, 118, 199) 50%, rgb(88, 78, 167) 100%);
+                            height:40px;" class="tiles__header">
+                            <div style="margin: 10px;
+                            position: absolute;
+                            height: 23px;
+                            width: 23px;">
+                                <!-- <i class="pi pi-calendar text-white-600 text-xl" style="position: absolute;padding-top: 3px;padding-left: 2px;"></i> -->
+                            </div>
+
+                            <div style="text-align:center;">
+                        <h5 style="color: white;"> Phase-III</h5></div>
+                            </div>
+                            <div class="grid">
+                                <div  class="col-12 lg:col-6 xl:col-4">
+                                    <img src="assets/demo/images/icons/ac.png" alt="Image" height="80" width="80" style="padding-top: 10px; padding-left: 10%;">
+
+                                </div>
+                                <div  class="col-12 lg:col-6 xl:col-8">
+                                    <h2 style="padding-top:14%">
+                                        {{rainfall}} (V)
+                                    </h2>
+                                </div>
+                            </div>
+                            </div>
+
+                        </div>
+
+
+                        <!-- voltage -->
+
+
+                        <!-- VOLTAGE I-I -->
+
+
+                    </div>
+                    </div>
+                    <div class=" card col-12 lg:col-6 xl:col-12" style="margin-top: 17px;">
+                        <div id="chart">
+                            <apx-chart
+                              [series]="chartOptions?.series"
+                              [chart]="chartOptions?.chart"
+                              [xaxis]="chartOptions?.xaxis"
+                              [stroke]="chartOptions?.stroke"
+                              [tooltip]="chartOptions?.tooltip"
+                              [dataLabels]="chartOptions?.dataLabels"
+                              [legend]="chartOptions?.legend"
+                              [markers]="chartOptions?.markers"
+                              [grid]="chartOptions?.grid"
+                              [yaxis]="chartOptions?.yaxis"
+                              [title]="chartOptions?.title"
+                            ></apx-chart>
+                          </div>
+                    </div>
+                    <!-- <div class="col-12 lg:col-6 xl:col-6">
+
+                        <div class="card" style="height: 476px; overflow-x: hidden;
+                        overflow-y: auto;">
+                        <h4 class="card-para">Emission Type</h4>
+
+                        <div class="subCard">
+                            <div class="subcard-icon">
+                                <div class="icon">
+                                    <i class="pi pi-slack text-blue-600 text-xl"></i>
+                                </div>
+                                <p>Signal Strength</p>
+                            </div>
+                            <p class="unit"> {{convertToPercentage(WeatherData?.tw)| number:'1.2-2' }}% </p>
+                        </div>
+
+
+
+                        </div>
+                    </div> -->
+                    <div class=" card col-12 lg:col-6 xl:col-12">
+
+                        <p-table
+                        #dt
+                        [value]="livechart"
+                        [rows]="10"
+                        [paginator]="true"
+                        [tableStyle]="{ 'min-width': '75rem' }"
+                        [rowHover]="true"
+                        [showCurrentPageReport]="true"
+                        >
+                            <ng-template pTemplate="caption">
+                                <div class="flex align-items-center justify-content-between">
+                                    <h3 class="m-0">Tabular view</h3>
+
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pSortableColumn="date" style="min-width:8rem">Date <p-sortIcon field="date"></p-sortIcon></th>
+                                    <th pSortableColumn="time" >Time <p-sortIcon field="time"></p-sortIcon></th>
+                                    <th pSortableColumn="temperature" >DC(Phase-1) <p-sortIcon field="temperature"></p-sortIcon></th>
+                                    <th pSortableColumn="humidity" >DC(Phase-2) <p-sortIcon field="humidity"></p-sortIcon></th>
+                                    <th pSortableColumn="atm_pressure" >DC(Phase-3)<p-sortIcon field="atm_pressure"></p-sortIcon></th>
+                                    <th pSortableColumn="wind_speed" >AC(Phase-1) <p-sortIcon field="wind_speed"></p-sortIcon></th>
+                                    <th pSortableColumn="wind_direction" >AC(Phase-2) <p-sortIcon field="wind_direction"></p-sortIcon></th>
+                                    <th pSortableColumn="solar_radiation" >AC(Phase-3)<p-sortIcon field="solar_radiation"></p-sortIcon></th>
+                                    <!-- <th pSortableColumn="rainfall" >RainFall <p-sortIcon field="rainfall"></p-sortIcon></th>
+                                    <th pSortableColumn="rainfall_cumulative" >RainFall Cumulative <p-sortIcon field="rainfall_cumulative"></p-sortIcon></th> -->
+
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-product>
+                                <tr>
+                                    <td>{{ product.date }}</td>
+                                    <td>{{ product.time }}</td>
+                                    <!-- <td>{{ product.temperature |number:'1.2-2'}}</td> -->
+                                    <td>{{ product.humidity |number:'1.2-2'}}</td>
+                                    <td>{{ product.atm_pressure |number:'1.2-2'}}</td>
+                                    <td>{{ product.wind_speed |number:'1.2-2'}}</td>
+                                    <td>{{ product.wind_direction|number:'1.2-2' }}</td>
+                                    <!-- <td>{{ product.solar_radiation |number:'1.2-2'}}</td> -->
+                                    <td>{{ product.rainfall |number:'1.2-2'}}</td>
+                                    <td>{{ product.rainfall_cumulative |number:'1.2-2'}}</td>
+                                </tr>
+                            </ng-template>
+                            <!-- <ng-template pTemplate="summary">
+                                <div class="flex align-items-center justify-content-between">In total there are {{ livechart ? livechart.length : 0 }} Data.</div>
+                            </ng-template> -->
+                        </p-table>
+                    </div>
+                    <!-- <div class="col-12 lg:col-6 xl:col-4">
+                        <div class="card mb-0 grid" style=" height: 96%;
+                        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+                        transition: 0.3s;
+                        width: 100%;
+                        border-radius: 10px;
+                        padding: 0px!important;
+                        margin-top: 0%!important;">
+                        <div  class="col-12 lg:col-6 xl:col-12">
+                            <h2 style="text-align: center;">{{ currentDateTime | date: 'medium' }}</h4>
+                        </div>
+                        <div  c2ass="col-12 lg:col-6 xl:col-6">
+                         <img src="assets/demo/images/icons/w_icon.png" alt="Image" height="160" >
+                         <h6 style="padding-left: 30%;">Light Rain</h6>
+                        </div>
+                         <div  class="col-12 lg:col-6 xl:col-6">
+                            <h1 style="padding-top:40%">
+                                {{wsData.temperature}}<sup>o</sup> C
+                            </h1>
+                            <h6>RealFeel {{wsData?.temperature+5}}°</h6>
+                        </div>
+                        </div>
+                    </div> -->
+                <!-- </div> -->
+<div class="loader" *ngIf="spinner">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div><div class="overlay" *ngIf="spinner"></div>
+
+        </div>
+    <!-- </div> -->
+
+
+
+
+
+    <!-- </div>
+
+</div> -->

@@ -1,0 +1,28 @@
+<div class="card p-1">
+        <div class="field grid px-1 border-bottom">
+            <div class="col-4 md:col-4 mb-2 mt-2 lg:col-7 md:mb-0"
+            [ngClass]="{
+                'flex align-items-center justify-content-start text-lg':!cardSubTitle
+            }"
+            >
+                <p class="cardTitle"
+                [ngClass]="{
+                    'pl-2 text-lg':!cardSubTitle
+                }"
+                >{{cardTitle}}</p>
+                <span class="cardSubTitle">
+                    {{!cardSubTitle ? '' : cardSubTitle}}
+                </span>
+
+            </div>
+            <div class="col-8 md:col-8 mb-2 mt-2 lg:col-5 md:mb-0 flex align-items-center justify-content-end">
+                <ng-content select="[form]"></ng-content>
+            </div>
+        </div>
+
+    <div>
+        <ng-content select="[content]"></ng-content>
+    </div>
+
+    <ng-template pTemplate="footer"></ng-template>
+</div>

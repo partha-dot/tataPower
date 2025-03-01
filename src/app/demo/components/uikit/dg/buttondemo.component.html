@@ -1,0 +1,286 @@
+<div class="grid p-fluid">
+    <!-- <div class="col-12 lg:col-12">
+        <div class="card">
+            <div class="p-fluid p-formgrid grid">
+                <div class="field col-12 md:col-3">
+                    <label htmlFor="lastname2">Site Name</label>
+                    <input pInputText  type="text" />
+                </div>
+                <div class="field col-12 md:col-2">
+                    <label htmlFor="lastname2">Capacity (HP)</label>
+                    <input pInputText  type="text" />
+                </div>
+                <div class="field col-12 md:col-2">
+                    <label htmlFor="lastname2">Date of Installation</label>
+						<span class="p-input-icon-right">
+						<p-calendar dateFormat="dd/mm/yy" [showButtonBar]="true"></p-calendar>
+						<i class="pi pi-calendar"></i>
+						</span>
+                </div>
+                <div class="field col-12 md:col-1">
+                    <label htmlFor="lastname2">Log (min)</label>
+                    <input pInputText  type="text" />
+                </div>
+                <div class="field col-12 md:col-1" style="margin-top: 2%;">
+                    <p-button styleClass="p-button-primary " label="Update"></p-button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    -->
+    <div class="col-12 lg:col-12">
+    <div class="card" style="padding: 0!important;">
+        <div class="grid" style="margin-left: 0rem!important;">
+
+            <!-- <div class="col-12 lg:col-2 xl:col-1">
+                <div class="livenow">
+                  <div></div>
+                  <h5>Live</h5>
+                </div>
+           </div> -->
+
+           <!-- <div class="col-12 lg:col-2 xl:col-7">
+            <h4 style=" margin-top: 32px;">Last Updated: {{lastUpdateTime}}</h4></div> -->
+           <!-- <div class="col-12 lg:col-1 xl:col-1">
+            <span >Run Time</span>
+            <div class="text-900 font-medium text-xl">2.8 Hrs</div>
+           </div>  -->
+            <div class="field col-12 md:col-3" style=" position: absolute;
+            z-index: 1;
+            right: 32px;">
+            <label>&nbsp;</label>
+            <p-autoComplete [(ngModel)]="selectedDealer" [ngModelOptions]="{standalone: true}" placeholder="ABCDE01001" (onSelect)="setDevice()" [suggestions]="filteredDealer" (completeMethod)="filterDealer($event)" field="device_name" [dropdown]="true">
+            </p-autoComplete>
+            </div>
+            <div class="field col-12 md:col-12" >
+
+<div >
+    <p-tabView styleClass="tabview-custom" style="width: 100%!important;">
+        <p-tabPanel >
+            <ng-template pTemplate="header" >
+                <div class="circle"></div>
+                <!-- <img src="assets/demo/images/access/live.png" alt="logo" height="70px"> -->
+                <!-- <i class="pi pi-slack"  style="font-size: large!important;"></i>&nbsp; -->
+                <span></span>
+                <span  style="font-size: large!important;">Live Data</span>
+            </ng-template>
+
+        <div class="grid" style="margin-left: 0rem!important;">
+            <div class="col-12 lg:col-6 xl:col-6">
+                <div class="card mb-0 bg-blue-100" >
+                    <div class="flex justify-content-between mb-3">
+                        <div>
+                            <div class="text-500 mb-2 font-medium text-xl">FUEL: <b> 800 L</b></div>
+                            <div class="text-500 mb-2 font-medium text-xl">FUEL CONSUMPTION : <b> 50 L</b></div>
+                            <div class="text-500 mb-2 font-medium text-xl">FUEL RATE : <b>  154 L/H</b></div>
+                            <div class="text-500 mb-2 font-medium text-xl">PERCENTAGE OF FUEL :<b>  25%</b></div>
+                            <div class="text-500 mb-2 font-medium text-xl">AVAILABLE FULE :<b> 156 L</b></div>
+                            <div class="text-500 font-medium text-xl">USED FUEL :<b>  646 L</b></div>
+                            <!-- <span class="block text-500 font-medium mb-3">USED FUEL :<b>  646 L</b></span> -->
+
+                            <!-- <div class="text-green-900 font-medium text-xl">800 L</div> -->
+                        </div>
+                        <img src="assets/demo/images/billing/fuel.png" alt="logo" height="170px">
+                        <!-- <div class="flex align-items-center justify-content-center bg-blue-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                            <i class="pi pi-image text-blue-500 text-xl"></i>
+                        </div> -->
+                    </div>
+                    <!-- <span class="text-green-500 font-medium">24 new </span>
+                    <span class="text-500">since last visit</span> -->
+                </div>
+            </div>
+            <div class="col-12 lg:col-6 xl:col-6">
+                <div class="card mb-0 bg-orange-100">
+                    <div class="flex justify-content-between mb-3">
+                        <div>
+                            <div class="text-500 mb-2 font-medium text-xl">BATTERY VOLTAGE : <b> 50 V </b></div>
+                            <div class="text-500 mb-2 font-medium text-xl">BATTERY CHARGE(%) : <b> 70 </b></div>
+                            <div class="text-500 mb-2 font-medium text-xl"> RELATIVE POWER O/P : <b> 51 KH </b></div>
+                            <div class="text-500 mb-2 font-medium text-xl">POWER FACTOR :<b> 20 KH </b></div>
+                            <div class="text-500 mb-2 font-medium text-xl">POWER :<b> 52 K</b></div>
+                            <div class="text-500 font-medium text-xl">CURRENT :<b>  50 AMP</b></div>
+                        </div>
+                        <img src="assets/demo/images/billing/battery.png" alt="logo" height="170px">
+                    </div>
+                    <!-- <span class="text-green-500 font-medium">%52+ </span>
+                    <span class="text-500">since last week</span> -->
+                </div>
+            </div>
+            <div class="col-12 lg:col-6 xl:col-6">
+                <div class="card mb-0 bg-green-100">
+                    <div class="flex justify-content-between mb-3">
+                        <div>
+                            <div class="text-500 mb-2 font-medium text-xl">CURRENT LOAD : <b> 5.00% </b></div>
+                            <div class="text-500 mb-2 font-medium text-xl">ENERGY PRODUCED : <b> 50 KWH</b></div>
+                            <div class="text-500 mb-2 font-medium text-xl"> FREQUENCY : <b> 50MHz</b></div>
+                            <div class="text-500 mb-2 font-medium text-xl">COOLANT TEMPERATURE : <b> 20° C </b></div>
+                            <div class="text-500 mb-2 font-medium text-xl">OIL PRESSURE : <b> 52 K</b></div>
+                            <!-- <div class="text-500 font-medium text-xl">CURRENT :<b>  50 AMP</b></div> -->
+                        </div>
+                        <img src="assets/demo/images/billing/psr.png" alt="logo" height="170px">
+                    </div>
+                    <!-- <span class="text-green-500 font-medium">520  </span>
+                    <span class="text-500">newly registered</span> -->
+                </div>
+            </div>
+            <div class="col-12 lg:col-6 xl:col-6">
+                <div class="card mb-0 bg-pink-100">
+                    <div class="flex justify-content-between mb-3">
+                        <div>
+                            <div class="text-500 mb-2 font-medium text-xl">ACTIVE POWER : <b> 94KH </b></div>
+                            <div class="text-500 mb-2 font-medium text-xl">APPARENT POWER : <b> 64KH  </b></div>
+                            <div class="text-500 mb-2 font-medium text-xl"> RPM : <b> 6588 </b></div>
+                            <div class="text-500 mb-2 font-medium text-xl">TOAL RUNTIME : <b> 20 H </b></div>
+                        </div>
+                        <img src="assets/demo/images/billing/power.png" alt="logo" height="170px">
+                    </div>
+                    <!-- <span class="text-green-500 font-medium">85 </span>
+                    <span class="text-500">responded</span> -->
+                </div>
+            </div>
+            </div>
+
+        </p-tabPanel>
+        <p-tabPanel header="Header II" *ngIf="this.loginType=='pro'">
+            <ng-template pTemplate="header" style="width: 30%;">
+                <img src="assets/demo/images/access/info.png" alt="logo" height="70px">
+                <span></span>
+                <span  style="font-size: large!important;">Device Information</span>
+                &nbsp;
+            </ng-template>
+            <div class="grid" style="margin-left: 0rem!important;">
+                <div class="col-12 lg:col-6 xl:col-12">
+                    <h4>Map View</h4>
+                    <div class="card">
+                    <img src="assets/demo/images/access/map.png" alt="logo" class="weather">
+                    </div>
+
+                </div>
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <div class="card" >
+                        <h4>Description</h4>
+                    <p>Model &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ABCDE01001</p><hr>
+                    <p>Site Name &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  NOIDA</p><hr>
+                    <p>Specifications &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Battery</p><hr>
+                    <p>Last Maintenance &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  23-02-2023  12:23:24</p><hr>
+                    <p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </p>
+                    </div>
+
+
+                </div>
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <div class="card" >
+                        <h4>Alert Information</h4>
+                        <div class="field">
+                            <p-dropdown [(ngModel)]="selectedAlert" (onChange)="abc()" [options]="cities2" optionLabel="unit_name" placeholder="Select alert type"></p-dropdown>
+                        </div>
+                        <div class="flex justify-content-between mb-3" >
+                            <table >
+
+                                <tr >
+                                   <th style="text-align: left;"><i class="pi pi-info-circle text-yellow-500 text-xl">&nbsp;&nbsp;</i> High{{alert_type}} Alert</th>
+                                   <th>0</th>
+                                </tr>
+
+                                <tr >
+                                   <th style="text-align: left;"><i class="pi pi-info-circle text-red-500 text-xl">&nbsp;&nbsp;</i>Cretical High{{alert_type}} Alert</th>
+                                   <th>1</th>
+                                </tr>
+                                <tr >
+                                    <th style="text-align: left;"><i class="pi pi-info-circle text-yellow-500 text-xl">&nbsp;&nbsp;</i> Low{{alert_type}} Alert</th>
+                                    <th>0</th>
+                                 </tr>
+                                 <tr >
+                                    <th style="text-align: left;"><i class="pi pi-info-circle text-red-500 text-xl">&nbsp;&nbsp;</i> Cretical Low{{alert_type}} Alert</th>
+                                    <th>1</th>
+                                 </tr>
+
+                                </table>
+                            <!-- <div>
+                                <span class="block mb-3 customeX">Alert Type</span>
+                                <div class="text-900 font-medium text-xl">
+                                    High<hr>
+                                    Low<hr>
+                                    Cretical High<hr>
+                                    Cretical Low<hr>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="block mb-3 customeX">Value</span>
+                                <div class="text-900 font-medium text-xl">
+                                    0 <hr>
+                                    0 <hr>
+                                    0<hr>
+                                    0<hr>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+
+
+                </div>
+        </p-tabPanel>
+        <p-tabPanel header="Header III" *ngIf="this.loginType=='pro'">
+            <ng-template pTemplate="header" style="width: 30%;">
+                <img src="assets/demo/images/access/chart.png" alt="logo" height="70px">
+                <span></span>
+                <span  style="font-size: large!important;">Chart</span>
+            </ng-template>
+            <div class="grid" style="margin-left: 0rem!important;">
+
+                <div class="col-12 lg:col-6 xl:col-8">
+                    <div class="card" >
+                        <h5>BATTERY</h5>
+                            <p-chart type="bar" [data]="data" [options]="lineOptions"></p-chart>
+
+                    </div>
+                </div>
+                <div class="col-12 lg:col-6 xl:col-4">
+                    <div class="card">
+                        <h5 class="text-left w-full">WEEKLY BATTERY USED</h5>
+                        <p-chart type="doughnut" [data]="donatdata" [options]="chartOptions" ></p-chart>
+                    </div>
+                </div>
+
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <div class="card">
+                        <h5>FUEL</h5>
+                        <p-chart type="bar" [data]="polarData" [options]="options"></p-chart>
+                    </div>
+
+                </div>
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <div class="card" >
+                        <h5>FUEL USED</h5>
+                        <p-chart type="line" [data]="flow" [options]="lineOptions"></p-chart>
+                    </div>
+                </div>
+                <div class="col-12 lg:col-6 xl:col-12">
+                    <div class="card" >
+                       <b style="font-size: large;">Month</b>&nbsp;&nbsp;&nbsp;&nbsp; <p-inputSwitch [(ngModel)]="checked"></p-inputSwitch>
+                       &nbsp;&nbsp;&nbsp;<b  style="font-size: large;">Day (Fuel Usage)</b>
+
+                        <p-chart type="bar" [data]="barData" [options]="barOptions" ></p-chart>
+                    </div>
+                </div>
+
+                </div>
+        </p-tabPanel>
+    </p-tabView>
+</div>
+                </div>
+        </div>
+    </div>
+
+
+
+
+
+    </div>
+
+</div>
+<p-toast></p-toast>

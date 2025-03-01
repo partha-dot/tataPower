@@ -1,0 +1,442 @@
+<!-- <div class="grid p-fluid"> -->
+    <!-- <div class="col-12 lg:col-12">
+        <div class="card">
+            <div class="p-fluid p-formgrid grid">
+                <div class="field col-12 md:col-3">
+                    <label htmlFor="lastname2">Site Name</label>
+                    <input pInputText  type="text" />
+                </div>
+                <div class="field col-12 md:col-2">
+                    <label htmlFor="lastname2">Capacity (HP)</label>
+                    <input pInputText  type="text" />
+                </div>
+                <div class="field col-12 md:col-2">
+                    <label htmlFor="lastname2">Date of Installation</label>
+						<span class="p-input-icon-right">
+						<p-calendar dateFormat="dd/mm/yy" [showButtonBar]="true"></p-calendar>
+						<i class="pi pi-calendar"></i>
+						</span>
+                </div>
+                <div class="field col-12 md:col-1">
+                    <label htmlFor="lastname2">Log (min)</label>
+                    <input pInputText  type="text" />
+                </div>
+                <div class="field col-12 md:col-1" style="margin-top: 2%;">
+                    <p-button styleClass="p-button-primary " label="Update"></p-button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    -->
+    <!-- <div class="col-12 lg:col-12"> -->
+    <!-- <div class="card" style="padding: 0!important;"> -->
+        <div class="grid" style="margin-left: 0rem!important;">
+
+            <!-- <div class="col-12 lg:col-2 xl:col-1">
+                <div class="livenow">
+                  <div></div>
+                  <h5>Live</h5>
+                </div>
+           </div> -->
+
+           <!-- <div class="col-12 lg:col-2 xl:col-7">
+            <h4 style=" margin-top: 32px;">Last Updated: {{lastUpdateTime}}</h4></div> -->
+           <!-- <div class="col-12 lg:col-1 xl:col-1">
+            <span >Run Time</span>
+            <div class="text-900 font-medium text-xl">2.8 Hrs</div>
+           </div>  -->
+           <div class="col-12 md:col-12" >
+            <div style="float: right;">
+                <p-autoComplete [(ngModel)]="selectedDealer" [ngModelOptions]="{standalone: true}"
+                 placeholder="Select a device" (onSelect)="setDevice()"
+                 [suggestions]="filteredDealer"
+                 (completeMethod)="filterDealer($event)" field="device" [dropdown]="true">
+                </p-autoComplete>
+            </div>
+            </div>
+            <div class="col-12 md:col-12" *ngIf="checked">
+
+                    <ng-template pTemplate="header" style="width: 30%;">
+                        <span>Device Location</span>
+                        <agm-map [latitude]="lat" [longitude]="lng">
+                            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                          </agm-map>
+                    </ng-template>
+                    <div class="grid" style="margin-left: 0rem!important;">
+                        <div class="col-12 lg:col-6 xl:col-12">
+                            <!-- <div class="card" >
+                                <h4>Weather Used</h4>
+                            <button class="qbutton"
+                            [class.active]="activeOptionButton=='1yd'"
+                            (click)="getWeatherUsedByFilter('1yd')"
+                            >
+                            TODAY
+                            </button>
+                            <button class="qbutton"
+                            (click)="getWeatherUsedByFilter('1m')"
+                            [class.active]="activeOptionButton=='1m'"
+                            >
+                            MONTHLY
+                            </button>
+                            <button class="qbutton"
+                            (click)="getWeatherUsedByFilter('1y')"
+                            [class.active]="activeOptionButton=='1y'"
+                            >
+                            YEARLY
+                            </button>
+                            <button class="qbutton"
+                            (click)="getWeatherUsedByFilter('all')"
+                            [class.active]="activeOptionButton=='all'"
+                            >
+                            TOTAL
+                            </button>
+                            <ng-container *ngIf="chartOptions2;else no_Data">
+                                <apx-chart
+                                #chart
+                                [series]="chartOptions2?.series"
+                                [chart]="chartOptions2?.chart"
+                                [colors]="chartOptions2?.colors"
+                                [yaxis]="chartOptions2?.yaxis"
+                                [dataLabels]="chartOptions2?.dataLabels"
+                                [markers]="chartOptions2?.markers"
+                                [stroke]="chartOptions2?.stroke"
+                                [grid]="chartOptions2?.grid"
+                                [xaxis]="chartOptions2?.xaxis"
+                                [tooltip]="chartOptions2?.tooltip"
+                                [annotations]="chartOptions2?.annotations"
+                              ></apx-chart>
+                            </ng-container>
+                            <ng-template #no_Data>
+                                <p class="text-center">
+                                    No Data Available
+                                </p>
+                            </ng-template>
+
+
+
+                            </div> -->
+                            <chart-content-holder
+                            [cardTitle]="'Enegry Used'"
+                            >
+                                    <div form>
+                                            <form [formGroup]="graphical_view">
+                                                <filter-form
+                                                [_graphical_view_menus]="graphical_view_filter_menu"
+                                                formControlName="weather_used"
+                                                (onChange)="getWeatherUsedChartDataByFilter($event)"
+                                                ></filter-form>
+                                            </form>
+                                    </div>
+                                <div content>
+                                    <ng-container *ngIf="chartOptions2;else no_Data">
+                                        <apx-chart
+                                        #chart
+                                        [series]="chartOptions2?.series"
+                                        [chart]="chartOptions2?.chart"
+                                        [colors]="chartOptions2?.colors"
+                                        [yaxis]="chartOptions2?.yaxis"
+                                        [dataLabels]="chartOptions2?.dataLabels"
+                                        [stroke]="chartOptions2?.stroke"
+                                        [xaxis]="chartOptions2?.xaxis"
+                                        [tooltip]="chartOptions2?.tooltip"
+                                      ></apx-chart>
+                                    </ng-container>
+                                    <ng-template #no_Data>
+                                        <p class="text-center">
+                                            Loading....
+                                        </p>
+                                    </ng-template>
+
+                                </div>
+                            </chart-content-holder>
+                        </div>
+                        <div class="col-12 lg:col-6 xl:col-12">
+                            <!-- <div class="card" >
+                                <div class="card-header">
+                                    <h4>Voltage(V)</h4>
+
+                                    <form [formGroup]="weather_filter">
+                                        <p-calendar
+                                        [inline]="false"
+                                        placeholde="From Date - To Date"
+                                        dateFormat="dd/mm/yy"
+                                        [showTime]="true"
+                                        selectionMode="range"
+                                        [readonlyInput]="true"
+                                        [showButtonBar]="true"
+                                         formControlName="voltage_date_time"
+                                        appendTo="body"
+                                         ></p-calendar>
+                                    </form>
+
+                                </div>
+                                <br>
+                                <div id="chart6">
+                                    <ng-container *ngIf="chartOptions6;else noData">
+                                    <apx-chart
+                                      [series]="chartOptions6?.series"
+                                      [chart]="chartOptions6?.chart"
+                                      [yaxis]="chartOptions6?.yaxis"
+                                      [xaxis]="chartOptions6?.xaxis"
+                                      [labels]="chartOptions6?.labels"
+                                      [stroke]="chartOptions6?.stroke"
+                                      [markers]="chartOptions6?.markers"
+                                      [fill]="chartOptions6?.fill"
+                                      [tooltip]="chartOptions6?.tooltip"
+                                    ></apx-chart>
+                                </ng-container>
+                                <ng-template #noData>
+                                        <p class="text-center">No Data Available</p>
+                                </ng-template>
+
+                                  </div>
+                            </div> -->
+
+                            <chart-content-holder
+                            [cardTitle]="'Voltage(V)'"
+                            >
+                                    <div form>
+                                            <form [formGroup]="graphical_view">
+                                                <filter-form
+                                                [_graphical_view_menus]="graphical_view_filter_menu"
+                                                formControlName="voltage"
+                                                (onChange)="getVoltageChartDataByFilter($event)"
+                                                ></filter-form>
+                                            </form>
+                                    </div>
+                                <div content>
+                                    <ng-container *ngIf="chartOptions6;else noData">
+                                        <apx-chart
+                                          [series]="chartOptions6?.series"
+                                          [chart]="chartOptions6?.chart"
+                                          [yaxis]="chartOptions6?.yaxis"
+                                          [xaxis]="chartOptions6?.xaxis"
+                                          [labels]="chartOptions6?.labels"
+                                          [stroke]="chartOptions6?.stroke"
+                                          [markers]="chartOptions6?.markers"
+                                          [fill]="chartOptions6?.fill"
+                                          [tooltip]="chartOptions6?.tooltip"
+                                        ></apx-chart>
+                                    </ng-container>
+                                    <ng-template #noData>
+                                        <p class="text-center">
+                                            Loading....
+                                        </p>
+                                    </ng-template>
+                                </div>
+                            </chart-content-holder>
+                        </div>
+                        <div class="col-12 lg:col-6 xl:col-12">
+                            <!-- <div class="card" >
+                                <div class="card-header">
+                                    <h4>Current(A)</h4>
+                                    <form [formGroup]="weather_filter">
+                                        <p-calendar
+                                        [inline]="false"
+                                        placeholde="From Date - To Date"
+                                        dateFormat="dd/mm/yy"
+                                        [showTime]="true"
+                                        selectionMode="range"
+                                        [readonlyInput]="true"
+                                        [showButtonBar]="true"
+                                         formControlName="current_date_time"
+                                        appendTo="body"
+                                         ></p-calendar>
+                                    </form>
+                                </div>
+                                <br>
+                                <div id="chart6">
+                                    <ng-container *ngIf="chartOptions7;else noData">
+                                    <apx-chart
+                                      [series]="chartOptions7?.series"
+                                      [chart]="chartOptions7?.chart"
+                                      [yaxis]="chartOptions7?.yaxis"
+                                      [xaxis]="chartOptions7?.xaxis"
+                                      [labels]="chartOptions7?.labels"
+                                      [stroke]="chartOptions7?.stroke"
+                                      [markers]="chartOptions7?.markers"
+                                      [fill]="chartOptions7?.fill"
+                                      [tooltip]="chartOptions7?.tooltip"
+                                    ></apx-chart>
+                                    </ng-container>
+                                    <ng-template #noData>
+                                        <p class="text-center">No Data Available</p>
+                                    </ng-template>
+                                  </div>
+                            </div> -->
+
+                            <chart-content-holder
+                            [cardTitle]="'Current(C)'"
+                            >
+                                    <div form>
+                                            <form [formGroup]="graphical_view">
+                                                <filter-form
+                                                [_graphical_view_menus]="graphical_view_filter_menu"
+                                                formControlName="current"
+                                                (onChange)="getCurrentChartDataByFilter($event)"
+                                                ></filter-form>
+                                            </form>
+                                    </div>
+                                <div content>
+                                    <ng-container *ngIf="chartOptions7;else noData">
+                                        <apx-chart
+                                          [series]="chartOptions7?.series"
+                                          [chart]="chartOptions7?.chart"
+                                          [yaxis]="chartOptions7?.yaxis"
+                                          [xaxis]="chartOptions7?.xaxis"
+                                          [labels]="chartOptions7?.labels"
+                                          [stroke]="chartOptions7?.stroke"
+                                          [markers]="chartOptions7?.markers"
+                                          [fill]="chartOptions7?.fill"
+                                          [tooltip]="chartOptions7?.tooltip"
+                                        ></apx-chart>
+                                        </ng-container>
+                                        <ng-template #noData>
+                                            <p class="text-center">
+                                                Loading....
+                                            </p>
+                                        </ng-template>
+                                </div>
+                            </chart-content-holder>
+                        </div>
+                        <div class="col-12 lg:col-6 xl:col-12">
+                            <!-- <div class="card" >
+                                <div class="card-header">
+                                    <h4>Power</h4>
+                                    <form [formGroup]="weather_filter">
+                                        <p-calendar
+                                        [inline]="false"
+                                        placeholde="From Date - To Date"
+                                        dateFormat="dd/mm/yy"
+                                        [showTime]="true"
+                                        selectionMode="range"
+                                        [readonlyInput]="true"
+                                        [showButtonBar]="true"
+                                         formControlName="power_date_time"
+                                        appendTo="body"
+                                         ></p-calendar>
+                                    </form>
+                                </div>
+
+                                <br>
+                                <div id="chart6">
+                                    <ng-container *ngIf="chartOptions8;else noData">
+                                        <apx-chart
+                                        [series]="chartOptions8?.series"
+                                        [chart]="chartOptions8?.chart"
+                                        [yaxis]="chartOptions8?.yaxis"
+                                        [xaxis]="chartOptions8?.xaxis"
+                                        [labels]="chartOptions8?.labels"
+                                        [stroke]="chartOptions8?.stroke"
+                                        [markers]="chartOptions8?.markers"
+                                        [fill]="chartOptions8?.fill"
+                                        [tooltip]="chartOptions8?.tooltip"
+                                      ></apx-chart>
+                                    </ng-container>
+                                    <ng-template #noData>
+                                        <p class="text-center">No Data Available</p>
+                                    </ng-template>
+
+                                  </div>
+                            </div> -->
+                            <chart-content-holder
+                            [cardTitle]="'Power(P)'"
+                            >
+                                    <div form>
+                                            <form [formGroup]="graphical_view">
+                                                <filter-form
+                                                [_graphical_view_menus]="graphical_view_filter_menu"
+                                                formControlName="power"
+                                                (onChange)="getPowerChartDataByFilter($event)"
+                                                ></filter-form>
+                                            </form>
+                                    </div>
+                                <div content>
+                                    <ng-container *ngIf="chartOptions8;else noData">
+                                        <apx-chart
+                                        [series]="chartOptions8?.series"
+                                        [chart]="chartOptions8?.chart"
+                                        [yaxis]="chartOptions8?.yaxis"
+                                        [xaxis]="chartOptions8?.xaxis"
+                                        [labels]="chartOptions8?.labels"
+                                        [stroke]="chartOptions8?.stroke"
+                                        [markers]="chartOptions8?.markers"
+                                        [fill]="chartOptions8?.fill"
+                                        [tooltip]="chartOptions8?.tooltip"
+                                      ></apx-chart>
+                                    </ng-container>
+                                    <ng-template #noData>
+                                        <p class="text-center">
+                                            Loading....
+                                        </p>
+                                    </ng-template>
+                                </div>
+                            </chart-content-holder>
+
+                        </div>
+                        <div class="col-12 lg:col-12 xl:col-12">
+
+                            <!-- <div class="card" >
+                                <div>
+                                    <apx-chart
+                                    [series]="chartOptions5?.series"
+                                    [chart]="chartOptions5?.chart"
+                                    [xaxis]="chartOptions5?.xaxis"
+                                    [dataLabels]="chartOptions5?.dataLabels"
+                                    [yaxis]="chartOptions5?.yaxis"
+                                    [colors]="chartOptions5?.colors"
+                                    [legend]="chartOptions5?.legend"
+                                    [fill]="chartOptions5?.fill"
+                                    ></apx-chart>
+                                </div>
+                            </div> -->
+
+                            <chart-content-holder
+                            [cardTitle]="'Power Analysis'"
+                            >
+                                    <div form>
+                                            <form [formGroup]="graphical_view">
+                                                <filter-form
+                                                [_graphical_view_menus]="graphical_view_filter_menu"
+                                                formControlName="kvar_kw_kva"
+                                                (onChange)="get_kVA_kW_kVAR_ChartDataByFilter($event)"
+                                                ></filter-form>
+                                            </form>
+                                    </div>
+                                <div content>
+                                    <ng-container *ngIf="chartOptions5;else noData">
+                                        <apx-chart
+                                            [series]="chartOptions5?.series"
+                                            [chart]="chartOptions5?.chart"
+                                            [xaxis]="chartOptions5?.xaxis"
+                                            [dataLabels]="chartOptions5?.dataLabels"
+                                            [yaxis]="chartOptions5?.yaxis"
+                                            [colors]="chartOptions5?.colors"
+                                            [legend]="chartOptions5?.legend"
+                                            [fill]="chartOptions5?.fill"
+                                            ></apx-chart>
+                                        </ng-container>
+                                        <ng-template #noData>
+                                            <p class="text-center">
+                                                Loading....
+                                            </p>
+                                        </ng-template>
+                                </div>
+                            </chart-content-holder>
+                        </div>
+                        </div>
+
+            </div>
+        </div>
+    <!-- </div> -->
+
+
+
+
+
+    <!-- </div>
+
+</div> -->

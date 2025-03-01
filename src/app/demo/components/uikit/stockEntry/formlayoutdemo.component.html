@@ -1,0 +1,101 @@
+<div class="grid">
+
+	<div class="col-12">
+		<div class="card">
+			<h5>Manage Scheduling</h5>
+			<form [formGroup]="stockIn">
+				<div class="p-fluid p-formgrid grid">
+					<div class="field col-12 md:col-6">
+						<label htmlFor="firstname2">Select Device</label>
+						<p-autoComplete [(ngModel)]="selectedCountryAdvanced" [ngModelOptions]="{standalone: true}" (onSelect)="selected()" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" field="model_name" [dropdown]="true">
+						</p-autoComplete>
+					</div>
+					<div class="field col-12 md:col-6">
+						<label htmlFor="firstname2">Select Channel</label>
+						<p-autoComplete [(ngModel)]="selectedDealer" [ngModelOptions]="{standalone: true}" (onSelect)="setDealer()" [suggestions]="filteredDealer" (completeMethod)="filterDealer($event)" field="shop_name" [dropdown]="true">
+						</p-autoComplete>
+					</div>
+					<div class="field col-12 md:col-2">
+						<label htmlFor="firstname2">DO TYPE:</label>
+						<input pInputText [(ngModel)]="product_n" [ngModelOptions]="{standalone: true}" id="firstname2" type="text" />
+					</div>
+					<div class="field col-12 md:col-2">
+						<label htmlFor="lastname2">Relay Close Time</label>
+						<input pInputText [(ngModel)]="company_n" [ngModelOptions]="{standalone: true}" id="lastname2" type="text" />
+					</div>
+					<div class="field col-12 md:col-2">
+						<label htmlFor="city">Relay Delay Time</label>
+						<p-inputNumber  formControlName="purchase_by"  locale="en-IN"> </p-inputNumber>
+					</div>
+					<div class="field col-12 md:col-2">
+						<label htmlFor="city">Timer Start Hrs</label>
+						<p-inputNumber   formControlName="purchase_rate" inputId="currency-india" locale="en-IN"> </p-inputNumber>
+					</div>
+					
+					<div class="field col-12 md:col-2">
+						<label htmlFor="city">Timer Start Min</label>
+						<span class="p-input-icon-right">
+						<p-calendar dateFormat="dd/mm/yy" formControlName="purchase_date" (onSelect)="setWarranty()" [showButtonBar]="true"></p-calendar>
+						<i class="pi pi-calendar"></i>
+						</span>
+					</div>
+					<div class="field col-12 md:col-2">
+						<label htmlFor="city">Timer Start Hrs</label>
+						<p-inputNumber [(ngModel)]="warr_in_month" inputId="percent" [ngModelOptions]="{standalone: true}" (ngModelChange)="setWarranty()" > </p-inputNumber>
+					</div>
+					<div class="field col-12 md:col-2">
+						<label htmlFor="city">Timer stop min </label>
+						<span class="p-input-icon-right">
+						<p-calendar dateFormat="dd/mm/yy" formControlName="warranty_expired" [showButtonBar]="true"></p-calendar>
+						<i class="pi pi-calendar"></i>
+						</span>
+					</div>
+					<div class="field col-12 md:col-2">
+						<label htmlFor="city">Timer stop hrs -1 </label>
+						<p-inputNumber formControlName="cgst_p" inputId="percent" > </p-inputNumber>
+					</div>
+					<div class="field col-12 md:col-2">
+						<label htmlFor="city">Timer stop min -1 </label>
+						<p-inputNumber formControlName="sgst_p" inputId="percent" > </p-inputNumber>
+					</div>
+					<div class="field col-12 md:col-2"> 
+						<label htmlFor="city">Timer stop min -1 </label>
+						<p-inputNumber  formControlName="sales_rate"  locale="en-IN"> </p-inputNumber>
+					</div>
+					<!-- <div class="field col-12 md:col-2">
+						<label htmlFor="city">Sale Warranty</label>
+						<span class="p-input-icon-right">
+						<p-calendar  formControlName="sels_warranty" [showButtonBar]="true"></p-calendar>
+						<i class="pi pi-calendar"></i>
+						</span>
+					</div> -->
+				</div>
+					
+					
+					<div class="field col-12 md:col-12" >
+
+						<p-button icon="pi pi-check" [disabled]="skillsFormArray.length==0" (click)="insertStockData()" styleClass="p-button-primary " label="Save & Apply"></p-button>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p-button icon="pi pi-refresh" (click)="resetData()" styleClass="p-button-danger" label="Reset"></p-button>
+					
+					</div>
+					<div class="field col-12 md:col-2" >
+
+					</div>
+					  <!-- <button type="button" (click)="addSkill()">Add Skill</button> -->
+					  <!-- <p-button label="Submit" icon="pi pi-check" styleClass="p-button-success"></p-button> -->
+					  <!-- <button type="submit" [disabled]="stockIn.invalid">Submit</button> -->
+					
+				
+			</form>
+			
+		</div>
+	</div>
+</div>
+<p-toast></p-toast>
+<div class="loader" *ngIf="spinner">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div><div class="overlay" *ngIf="spinner"></div>

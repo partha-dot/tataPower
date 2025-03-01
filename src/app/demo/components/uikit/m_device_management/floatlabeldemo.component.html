@@ -1,0 +1,273 @@
+<!--
+<div class="col-12 lg:col-6 xl:col-12">
+	<h4>Device Information</h4>
+	<div class="grid" style="margin-left: 0rem!important;">
+		<div class="col-12 lg:col-6 xl:col-12">
+			<div class="card mb-0 xcard">
+				<div class="justify-content-center">
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <b  style="font-size: x-large;color: #00cc00;">ENERGY</b>
+                    </div>
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <b class="text-900 font-medium text-xl">Total Device : 30</b>&nbsp;&nbsp;&nbsp;&nbsp;
+							<b>ONLINE</b>&nbsp;&nbsp;<p-badge [value]="20" severity="success"></p-badge>&nbsp;&nbsp;&nbsp;&nbsp;
+							<b>OFFLINE</b>&nbsp;&nbsp;<p-badge [value]="10" severity="danger"></p-badge>
+                    </div>
+                </div>
+
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-4" *ngIf="this.loginType=='pro'">
+			<div class="card mb-0 xcard">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block mb-3" style="font-size: x-large;color: #00cc00;">UPS</span>
+						<div class="text-900 font-medium text-xl">Total Nodes : 30</div>
+							<hr>
+						<div class="justify-content-center gap-2">
+							<b>ON</b>&nbsp;&nbsp;<p-badge [value]="20" severity="success"></p-badge>&nbsp;&nbsp;&nbsp;&nbsp;
+							<b>OFF</b>&nbsp;&nbsp;<p-badge [value]="10" severity="danger"></p-badge>
+						</div><hr>
+						<div class="text-900 font-medium text-xl">Battey :  79.40%</div>
+					</div>
+                    <img src="assets/demo/images/access/ups.png" alt="logo" style="width: 130px; height: 130px;">
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-4" *ngIf="this.loginType=='pro'">
+			<div class="card mb-0 xcard">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block mb-3" style="font-size: x-large;color: #00cc00;">DG</span>
+						<div class="text-900 font-medium text-xl">Total Nodes : 30</div>
+							<hr>
+						<div class="justify-content-center gap-2">
+							<b>ON</b>&nbsp;&nbsp;<p-badge [value]="20" severity="success"></p-badge>&nbsp;&nbsp;&nbsp;&nbsp;
+							<b>OFF</b>&nbsp;&nbsp;<p-badge [value]="10" severity="danger"></p-badge>
+						</div><hr>
+						<div class="text-900 font-medium text-xl">Total Fuel : 200 L</div>
+					</div>
+                    <img src="assets/demo/images/access/dg.png" alt="logo" style="width: 134px;height: 150px;">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+ -->
+
+
+
+
+<div class="col-12 lg:col-6 xl:col-12">
+
+
+<div class="card">
+    <p-toast></p-toast>
+    <h5 class="m-2">Manage Device</h5>
+    <p-table
+        #dt
+        [value]="stockList"
+        [rows]="10"
+        [paginator]="true"
+        [globalFilterFields]="['device_id', 'modal', 'battery', 'status']"
+        [tableStyle]="{ 'min-width': '75rem' }"
+        [(selection)]="selectedProducts"
+        [rowHover]="true"
+        dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [showCurrentPageReport]="true"
+    >
+
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <b class="text-900 font-medium text-xl">Total Device : {{ stockList ? stockList.length : 0 }}</b>|
+                <b>ONLINE</b><p-badge [value]="totOnline" severity="success"></p-badge>|
+                <b>OFFLINE</b><p-badge [value]="totOffilne" severity="danger"></p-badge><br>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <!-- <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." /> -->
+                    <button pButton pRipple label="Add New Device" icon="pi pi-plus" class="p-button-primary mr-2" (click)="openNew2()"></button>
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Sl No.</th>
+                <th pSortableColumn="device">Device<p-sortIcon field="name"></p-sortIcon></th>
+                <th pSortableColumn="device_name">Device Name <p-sortIcon field="name"></p-sortIcon></th>
+                <th pSortableColumn="device_type">Device Type <p-sortIcon field="name"></p-sortIcon></th>
+                <!-- <th pSortableColumn="meter_type">Meter Type <p-sortIcon field="name"></p-sortIcon></th> -->
+                <!-- <th pSortableColumn="price">Device ID <p-sortIcon field="price"></p-sortIcon></th> -->
+                <th pSortableColumn="model">Model<p-sortIcon field="price"></p-sortIcon></th>
+                <th pSortableColumn="lat" >Latitude <p-sortIcon field="category"></p-sortIcon></th>
+                <th pSortableColumn="lon" >Longitude <p-sortIcon field="category"></p-sortIcon></th>
+                <th pSortableColumn="imei_no" >IMEI NO <p-sortIcon field="category"></p-sortIcon></th>
+				<th pSortableColumn="weather_data_created_at" >Status <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+                <th>Edit</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowIndex="rowIndex" let-product>
+            <tr>
+               <td>{{rowIndex+1}}</td>
+                <td>{{ product.device }}</td>
+                <td>{{ product.device_name }}</td>
+                <td>{{ product.device_type=="EN"?"ENERGY":"ENERGY" }}</td>
+                <!-- <td>{{ product.meter_type=="ENSF"?"Single Phase":"Three Phase" }}</td> -->
+                <!-- <td>{{ product.device_name}}</td> -->
+                <td>{{ product.model }}</td>
+                <td>{{ product.lat }}</td>
+                <td>{{ product.lon }}</td>
+                <td>{{ product.imei_no }}</td>
+                <!-- <td>{{ product.weather_data_created_at?"Offline":"Online" }}</td> -->
+				<th style="text-align: center;">
+					<p-badge [value]="product.status=='Y'?'Online':'Offline'" [severity]="product.status=='Y'?'success':'danger'"></p-badge>
+				</th>
+                <td style="text-align: center;">
+					<button type="button" pButton pRipple icon="pi pi-pencil" (click)="editProduct(product)"></button>
+				</td>
+                <!-- <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(product)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteProduct(product.device_id)"></button>
+                </td> -->
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">In total there are {{ stockList ? stockList.length : 0 }} devices.</div>
+        </ng-template>
+    </p-table>
+</div>
+<p-dialog [(visible)]="productDialog" [style]="{ width: '600px', height:'700px' }" header="Device Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <!-- <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.image" class="block m-auto pb-3" *ngIf="product.image" /> -->
+        <div class="field">
+            <label for="name">Devuce id</label>
+            <p-autoComplete [(ngModel)]="selectedDealer" [ngModelOptions]="{standalone: true}" placeholder="ABCDE01001" (onSelect)="setDevice()" [suggestions]="filteredDealer" (completeMethod)="filterDealer($event)" field="device_name" [dropdown]="true">
+            </p-autoComplete>
+            <small class="p-error" *ngIf="submitted && !product.name">Name is required.</small>
+        </div>
+        <!-- <div class="field">
+            <label for="description">Description</label>
+            <textarea id="description" pInputTextarea [(ngModel)]="product.description" required rows="3" cols="20"></textarea>
+        </div> -->
+
+
+
+        <div class="field">
+            <label class="mb-3">Status</label>
+            <div class="formgrid grid">
+                <div class="field-radiobutton col-6">
+                    <p-radioButton id="category1" name="category" value="Active" [(ngModel)]="product.category"></p-radioButton>
+                    <label for="category1">Active</label>
+                </div>
+                <div class="field-radiobutton col-6">
+                    <p-radioButton id="category2" name="category" value="Deactive" [(ngModel)]="product.category"></p-radioButton>
+                    <label for="category2">Deactive</label>
+                </div>
+                <!-- <div class="field-radiobutton col-6">
+                    <p-radioButton id="category3" name="category" value="Electronics" [(ngModel)]="product.category"></p-radioButton>
+                    <label for="category3">Electronics</label>
+                </div>
+                <div class="field-radiobutton col-6">
+                    <p-radioButton id="category4" name="category" value="Fitness" [(ngModel)]="product.category"></p-radioButton>
+                    <label for="category4">Fitness</label>
+                </div> -->
+            </div>
+        </div>
+
+        <div class="formgrid grid">
+            <div class="field col">
+                <label for="price">Model</label>
+                <p-dropdown [options]="DeviceModel" [(ngModel)]="selectedCity" optionLabel="name" [showClear]="true" placeholder="Select a Model"></p-dropdown>
+            </div>
+            <div class="field col">
+                <label for="quantity">Battery(%)</label>
+                <p-inputNumber id="quantity" [(ngModel)]="product.quantity"></p-inputNumber>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+    </ng-template>
+</p-dialog>
+<p-dialog [(visible)]="AddproductDialog" [style]="{ width: '650px', height:'500px'}" header="Add New Device" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <form [formGroup]="addDevice" class="grid">
+            <div class=" col-6 lg:col-6 xl:col-6">
+                <label for="name"><span style="color: red;">*</span>Device Name</label>
+                <input type="text" pInputText id="name" formControlName="deviceName" required autofocus />
+                <small *ngIf="addDevice.get('deviceName')?.errors?.['minlength'] || addDevice.get('deviceName')?.errors?.['maxlength']">
+                    <span style="color: red;">Device Name must be between 5 and 15 characters long.</span>
+                </small>
+
+            </div>
+            <div class="col-6 lg:col-6 xl:col-6">
+                <label for="name"><span style="color: red;">*</span>Device</label>
+                <input type="text" pInputText id="name" formControlName="deviceId" required autofocus />
+                <small *ngIf="addDevice.get('deviceId')?.errors?.['minlength'] || addDevice.get('deviceId')?.errors?.['maxlength']">
+                    <span style="color: red;">Device must be 10 characters long.</span>
+                </small>
+            </div>
+            <div class="col-6 lg:col-6 xl:col-6">
+                <label for="name"><span style="color: red;">*</span>Model</label>
+                <input type="text" pInputText id="name" formControlName="dmodel" required autofocus />
+                <!-- <small class="p-error" *ngIf="submitted && !product.name">Name is required.</small> -->
+            </div>
+            <div class="col-6 lg:col-6 xl:col-6">
+                <label htmlFor="firstname2"><span style="color: red;">*</span>Device Type</label>
+                <select formControlName="device_type" style="width: 100%;height: 42px;border-color: lightgray;border-radius: 5px;">
+                    <option [value]="0" disabled selected>Select an option</option>
+                      <option *ngFor="let option of DeviceType" [value]="option.code">
+                        {{option.name}}
+                      </option>
+                  </select>
+            </div>
+            <!-- <div class="col-6 lg:col-6 xl:col-6">
+                <label htmlFor="firstname2"><span style="color: red;">*</span>Meter Type</label>
+                <select formControlName="meter_type" style="width: 100%;height: 42px;border-color: lightgray;border-radius: 5px;">
+                    <option [value]="0" disabled selected>Select an option</option>
+                      <option *ngFor="let option2 of meterType" [value]="option2.code">
+                        {{option2.name}}
+                      </option>
+                  </select>
+            </div> -->
+            <div class="col-6 lg:col-6 xl:col-6">
+                <label for="name"><span style="color: red;">*</span>Latitude</label>
+                <input type="text" pInputText id="name" formControlName="lat" required autofocus />
+                <!-- <small class="p-error" *ngIf="submitted && !product.name">Name is required.</small> -->
+            </div>
+            <div class="col-6 lg:col-6 xl:col-6">
+                <label for="name"><span style="color: red;">*</span>Longitude</label>
+                <input type="text" pInputText id="name" formControlName="long" required autofocus />
+                <!-- <small class="p-error" *ngIf="submitted && !product.name">Name is required.</small> -->
+            </div>
+            <div class="col-6 lg:col-6 xl:col-6">
+                <label for="name"><span style="color: red;">*</span> IMEI NO</label>
+                <input type="text" pInputText id="name" formControlName="imeiNo" required autofocus />
+                <!-- <small *ngIf="addDevice.get('imeiNo')?.errors?.['required']">Device Name is required.</small> -->
+                <small *ngIf="addDevice.get('imeiNo')?.errors?.['minlength'] || addDevice.get('imeiNo')?.errors?.['maxlength']">
+                    <span style="color: red;">Device IMEI-NO must be 15 characters long.</span>
+                </small>
+            </div>
+        </form>
+
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+    </ng-template>
+</p-dialog>
+
+
+
+</div>
+<div class="loader" *ngIf="spinner">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div><div class="overlay" *ngIf="spinner"></div>

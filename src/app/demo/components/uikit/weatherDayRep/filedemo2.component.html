@@ -1,0 +1,228 @@
+<div class="card">
+    <!-- <div class="col-12 " *ngIf="showDragandDrop"><div style="position: relative;
+        padding-bottom: inherit; text-align: center;">
+        <h4>Select Columns for Creating Table</h4>
+
+            <p-pickList [source]="sourceProducts" [target]="targetProducts"
+            sourceHeader="Available Columns"
+            targetHeader="Selected" [dragdrop]="true" [responsive]="true"
+                [sourceStyle]="{ height: '30rem' }">
+                <ng-template let-product pTemplate="item">
+                    <div class="flex flex-wrap p-2 align-items-center gap-3">
+                        <div class="flex-1 flex flex-column gap-2">
+                            <span class="font-bold">{{ product.header }}</span>
+                        </div>
+                    </div>
+                </ng-template>
+
+            </p-pickList>
+            <div style="margin-top: 30px;text-align: center;">
+                <button pButton pRipple label="Get Table" icon="pi pi-angle-double-down"  (click)="openNew()" class="p-button-primary"></button>
+
+            </div>
+        </div>
+    </div> -->
+    <p-toast></p-toast>
+    <p-toolbar styleClass="mb-4 gap-2">
+        <!--  -->
+
+        <ng-template pTemplate="right">
+            <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload> -->
+            <button pButton pRipple label="Export to excel" icon="pi pi-upload"
+            (click)="exportToExcel()"
+            class="p-button-primary"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <!-- <button pButton pRipple label="Change Column" icon="pi pi-spin pi-cog"  (click)="showDragandDrop=!showDragandDrop" class="p-button-danger"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+            <button pButton pRipple label="Retrive" icon="pi pi-angle-double-down"  (click)="productDialog = true" class="p-button-primary"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+        </ng-template>
+    </p-toolbar>
+
+    <!-- <p-table
+        #dt
+        [value]="products"
+        [rows]="4"
+        [paginator]="true"
+        [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
+        [tableStyle]="{ 'min-width': '75rem' }"
+        [(selection)]="selectedProducts"
+        [rowHover]="true"
+        dataKey="product_id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [showCurrentPageReport]="true"
+    > -->
+	<p-table
+	#dt
+	[value]="products"
+	[rows]="20"
+    [columns]="cols"
+	[paginator]="true"
+    [responsive]="true"
+	[globalFilterFields]="getColumns()"
+    styleClass="p-datatable-gridlines"
+	[(selection)]="selectedProducts"
+	[rowHover]="true"
+	dataKey="product_id"
+	currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+	[showCurrentPageReport]="true"
+    >
+        <ng-template pTemplate="caption">
+            <!-- <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Weather Details</h5> -->
+                <!-- <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text"  placeholder="Search..." (input)="filterGlobal_secondary($event)"/>
+                </span> -->
+            <!-- </div> -->
+            <h5 style="text-align: center;">{{ORG}}</h5>
+            <h6 style="text-align: center;">Between the Period {{fromDate}} to {{toDate}}</h6>
+            <h6 style="text-align: center;">Device: {{device}}</h6>
+
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:2rem">Sl No.</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th colspan="3">Temperature (°C)</th>
+                <th colspan="3">Humidity (%)</th>
+                <th colspan="3">Solar Radiation (W/m2)</th>
+                <th colspan="3">ATM Pressure (mbar)</th>
+                <th >Total Rainfall(m/s)</th>
+                <th >Wind Direction (degree)</th>
+                <th >Wind Speed (km/h)</th>
+                <th >Signal Strength (%)</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>Min</th>
+                <th>Max</th>
+                <th>Avg</th>
+
+                <th>Min</th>
+                <th>Max</th>
+                <th>Avg</th>
+
+                <th>Min</th>
+                <th>Max</th>
+                <th>Avg</th>
+
+                <th>Min</th>
+                <th>Max</th>
+                <th>Avg</th>
+
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <!-- <h5>Device Name: {{device}}</h5> -->
+        <ng-template pTemplate="body" let-rowIndex="rowIndex" let-product >
+            <tr>
+                <td style="width:2rem">{{ rowIndex + 1 }}</td>
+                <td>{{ product.date }}</td>
+                <td>{{ product.time }}</td>
+                <!-- <td>{{ product.device }}</td> -->
+                <td>{{product.min_temperature| number:'1.2-2'}}</td>
+                <td>{{product.max_temperature| number:'1.2-2'}}</td>
+                <td>{{product.avg_temperature| number:'1.2-2'}}</td>
+
+                <td>{{product.min_humidity| number:'1.2-2'}}</td>
+                <td>{{product.max_humidity| number:'1.2-2'}}</td>
+                <td>{{product.avg_humidity| number:'1.2-2'}}</td>
+
+                <td>{{product.min_solar_radiation| number:'1.2-2'}}</td>
+                <td>{{product.max_solar_radiation| number:'1.2-2'}}</td>
+                <td>{{product.avg_solar_radiation| number:'1.2-2'}}</td>
+
+                <td>{{product.min_atm_pressure| number:'1.2-2'}}</td>
+                <td>{{product.max_atm_pressure| number:'1.2-2'}}</td>
+                <td>{{product.avg_atm_pressure| number:'1.2-2'}}</td>
+
+                <td>{{product.max_rainfall_cumulative| number:'1.2-2'}}</td>
+
+                <td>{{product.wind_direction| number:'1.2-2'}}</td>
+                <td>{{product.wind_speed| number:'1.2-2'}}</td>
+                <td>{{product.tw| number:'1.2-2'}}</td>
+
+           <!-- <tr>
+                <td> {{rowIndex+1}}</td>
+                <td>{{ product.date }}</td>
+                <td>{{ product.time }}</td>
+                <td>{{ product.device }}</td>
+
+                <td *ngIf="r">{{ product.r }}</td>
+                <td *ngIf="y">{{ product.y }}</td>
+                <td *ngIf="b">{{ product.b }}</td>
+                <td *ngIf="r_y">{{ product.r_y }}</td>
+                <td *ngIf="y_b">{{ product.y_b }}</td>
+                <td *ngIf="b_y">{{ product.b_y}}</td>
+                <td *ngIf="curr1">{{ product.curr1 }}</td>
+                <td *ngIf="curr2">{{ product.curr2 }}</td>
+                <td *ngIf="curr3">{{ product.curr3 }}</td>
+                <td *ngIf="eng">{{ product.e1+product.e2+product.e3 }}</td>
+                <td *ngIf="pf">{{ product.pf1+product.pf2+product.pf3/3 | number : '1.2-2'}}</td>
+                <td *ngIf="freq">{{ product.freq }}</td>
+                <td *ngIf="runhr">{{ product.runhr }}</td>
+                <td *ngIf="totkw">{{ product.totkw }}</td>
+                <td *ngIf="totkva">{{ product.totkva }}</td>
+                <td *ngIf="totkvar">{{ product.totkvar }}</td>
+            </tr>
+            -->
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr class="noDataFound">
+                <td [attr.colspan]="(cols.length + 1)" class="text-center">No Weather Data available.</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">In total there are {{ products ? products.length : 5 }} device data.</div>
+        </ng-template>
+    </p-table>
+</div>
+<p-dialog [(visible)]="productDialog" [style]="{ width: '450px' }" header="Daily Report" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <!-- <div class="p-fluid p-formgrid grid"> -->
+        <form  [formGroup]="reportData" style="width: 100%;">
+            <div class="flex-auto mt-3">
+                <label for="Device" class="font-semibold block mb-2"> Device </label>
+                <p-dropdown [options]="cities" [(ngModel)]="selectedDevice"
+                formControlName="d_id"
+                optionLabel="device"
+                [appendTo]="'body'"
+                [showClear]="true"
+                inputId="Device"
+                placeholder="Select a Device"></p-dropdown>
+            </div>
+            <div class="flex-auto my-3">
+                <label for="fdate" class="font-semibold block mb-2"> From Date </label>
+                <p-calendar formControlName="fdate" [appendTo]="'body'"
+                placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy"
+                [showIcon]="true" inputId="fdate"/>
+            </div>
+            <div class="flex-auto">
+                     <label for="tdate" class="font-semibold block mb-2"> To Date </label>
+                    <p-calendar formControlName="tdate" [appendTo]="'body'"  placeholder="DD-MM-YYYY"  dateFormat="dd-mm-yy"
+                    [showIcon]="true" inputId="tdate"/>
+            </div>
+        </form>
+        <!-- </div> -->
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <!-- <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button> -->
+        <button pButton pRipple label="Submit" [disabled]="!reportData.valid" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
+<div class="loader" *ngIf="spinner">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div><div class="overlay" *ngIf="spinner"></div>

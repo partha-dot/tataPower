@@ -1,0 +1,59 @@
+<div class="layout-topbar">
+    <a class="layout-topbar-logo" routerLink="">
+        <img src="assets/demo/images/billing/weather.png" alt="logo" style="width: 260px;height: 50px;">
+        <!-- <span>SAKAI</span> -->
+    </a>
+
+    <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
+        <i class="pi pi-bars"  style="color: white;"></i>
+    </button>
+
+    <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button" (click)="layoutService.showProfileSidebar()">
+        <i class="pi pi-ellipsis-v"  style="color: white;"></i>
+    </button>
+        <!-- <span><b>Hello {{user}}</b></span> -->
+        <!-- <p-inputGroup style="width: 80% !important; margin-left: 1%;">
+            <input type="text" pInputText placeholder="Keyword" style="width: 60% !important;" />
+            <button type="button" pButton icon="pi pi-search" class="p-button-success"></button>
+        </p-inputGroup> -->
+        <div style="float: left;  display: flex;  padding-left: 5%; padding-top: 1%;">
+            <h3 style="color: white; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif"> {{ORG}}</h3>
+        </div>
+    <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
+        <!-- <button class="p-link layout-topbar-button" (click)="showDialog()">
+            <i class="pi pi-calendar"></i>
+            <span>Calendar</span>
+        </button> -->
+
+        <!-- <button class="p-link layout-topbar-button" routerLink="/app/outlet/profile">
+            <i class="pi pi-user"></i>
+            <span>Profile</span>
+        </button> -->
+
+        <!-- <button class="p-link layout-topbar-button" (click)="confirm1($event)">
+            <i class="pi pi-sign-out" style="color: white;"></i>
+         <span>LogOut</span><label style="padding-left: 3px;">Sign Out</label>
+        </button> -->
+        <!-- <p-toast></p-toast> -->
+        <!-- <p-menu style="position: absolute;" #menu2 [model]="topbarMenu" [popup]="true"></p-menu>
+        <button pButton type="button" (click)="menu2.toggle($event)" icon="pi pi-bars" label="Show"></button> -->
+        <!-- <p-button [text]="true" severity="info"  icon="pi pi-bars" (click)="toggleMenu($event)" /> -->
+        <!-- <button #btn type="button" pButton icon="pi pi-bars" label="Show" (click)="toggleMenu($event)"></button> -->
+        <!-- <p-button icon="pi pi-user" [rounded]="true" [text]="true"  (click)="toggleMenu($event)"/>
+        <p-tieredMenu #menu2 [model]="menuItems" [popup]="true" icon="pi pi-user" (click)="toggleMenu($event)" style="
+
+
+    "> </p-tieredMenu> -->
+
+        <p-menu #menu [model]="menuItems" [popup]="true" />
+        <button class="button-62"(click)="menu.toggle($event)"  label="Setting" icon="pi pi-spin pi-cog" ><span class="pi pi-spin pi-cog"></span>  Setting</button>
+
+</div>
+
+<p-dialog header="Header" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw',height:'30vw' }" [draggable]="false" [resizable]="false">
+    <p class="m-0">
+        <p-calendar class="max-w-full" [(ngModel)]="date" [showWeek]="true"></p-calendar>
+    </p>
+</p-dialog>
+<p-toast></p-toast>
+        <p-confirmDialog></p-confirmDialog>

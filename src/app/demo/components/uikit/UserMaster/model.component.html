@@ -1,0 +1,134 @@
+<div class="card">
+    <p-toast></p-toast>
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-primary mr-2" (click)="openNew()"></button>
+            <!-- <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button> -->
+        </ng-template>
+
+        <!-- <ng-template pTemplate="right">
+            <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+        </ng-template> -->
+    </p-toolbar>
+
+    <!-- <p-table
+        #dt
+        [value]="products"
+        [rows]="4"
+        [paginator]="true"
+        [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
+        [tableStyle]="{ 'min-width': '75rem' }"
+        [(selection)]="selectedProducts"
+        [rowHover]="true"
+        dataKey="company_id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [showCurrentPageReport]="true"
+    > -->
+	<p-table
+	#dt
+	[value]="models"
+	[rows]="4"
+	[paginator]="true"
+	[globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
+	[tableStyle]="{ 'min-width': '75rem' }"
+	[(selection)]="selectedProducts"
+	[rowHover]="true"
+	dataKey="company_id"
+	currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+	[showCurrentPageReport]="true"
+    >
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Manage User</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                
+				<th>Sl No.</th>
+                <th pSortableColumn="company" style="min-width:15rem">Organization Name <p-sortIcon field="company"></p-sortIcon></th>
+                <th pSortableColumn="product" style="min-width:15rem">user Name <p-sortIcon field="product"></p-sortIcon></th>
+                <th pSortableColumn="model" style="min-width:15rem">email <p-sortIcon field="model"></p-sortIcon></th>
+                <th pSortableColumn="model" style="min-width:15rem">Status </th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-model let-rowIndex="rowIndex">
+            <tr>
+                
+                <td>{{ rowIndex+1 }}</td>
+                <td>{{ model.organization_name }}</td>
+                <td>{{ model.user_name }}</td>
+                <td>{{ model.user_email}}</td>
+                <td *ngIf="model.user_active_status=='Y'"> <p-badge value="ACTIVE" severity="success"></p-badge></td>
+                <td *ngIf="model.user_active_status=='N'"> <p-badge value="DE-ACTIVE" severity="danger"></p-badge></td>
+                
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-primary mr-2" (click)="editProduct(model)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteProduct(model)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">In total there are {{ models ? models.length : 0 }} Users.</div>
+        </ng-template>
+    </p-table>
+</div>
+<p-dialog [(visible)]="productDialog" [style]="{ width: '650px', height:'600px' }" header="User Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <from [formGroup]="userForm">
+        <!-- <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.image" class="block m-auto pb-3" *ngIf="product.image" /> -->
+        <div class="field">
+            <label for="company">Organization Name</label>
+            <select formControlName="organization_id" style="width: 100%;height: 39px;border-color: lightgray;border-radius: 5px;">
+                <option selected disabled [value]="0">Select a Organization</option>
+                <option *ngFor="let dt of companys" [value]="dt.organization_id">{{dt.organization_name}}</option>
+             </select>
+        </div>
+        <div class="field" hidden>
+            <label for="product">User id</label>
+            <input type="text" pInputText id="id" formControlName="user_id" required  />
+        </div> 
+
+         <div class="field">
+            <label for="product">User Name</label>
+            <input type="text" pInputText id="name" formControlName="name" required  />
+        </div>
+        <div class="field">
+            <label for="product">Email</label>
+            <input type="text" pInputText id="email" formControlName="email" required autocomplete="new-username" />
+        </div>
+        <a *ngIf="editMode" style="color: darkgreen;" (click)="changePass()">Change Password</a>
+        <div *ngIf="!editMode">
+            <div class="field">
+                <label for="product">New Password</label>
+                <p-password formControlName="password" [toggleMask]="true" autocomplete="new-password"></p-password>
+            </div>
+            <div class="field">
+                <label for="product">Confirm Password</label>
+                <p-password [(ngModel)]="value"  [ngModelOptions]="{standalone: true}" [toggleMask]="true"></p-password>
+            </div>
+        </div>
+        </from>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog> 
+
+<div class="loader" *ngIf="spinner">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div><div class="overlay" *ngIf="spinner"></div>

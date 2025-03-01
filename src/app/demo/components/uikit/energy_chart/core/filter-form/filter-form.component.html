@@ -1,0 +1,20 @@
+<p-dropdown
+[options]="_graphical_view_menus"
+[formControl]="$any(ngControl.control)"
+optionLabel="name"
+[filter]="true"
+filterBy="name"
+[showClear]="false"
+placeholder="Select Mode"
+>
+    <ng-template pTemplate="selectedItem" let-selectedOption>
+        <div class="flex align-items-center gap-2">
+            <div>{{ $any(ngControl.control).value.name }}</div>
+        </div>
+    </ng-template>
+    <ng-template let-graphical_view pTemplate="item">
+        <div class="flex align-items-center gap-2">
+            <div>{{ graphical_view.name }}</div>
+        </div>
+    </ng-template>
+</p-dropdown>

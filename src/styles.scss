@@ -1,0 +1,227 @@
+/* You can add global styles to this file, and also import other style files */
+
+$gutter: 1rem; //for primeflex grid system
+@import "assets/layout/styles/layout/layout.scss";
+
+/* PrimeNG */
+@import "../node_modules/primeng/resources/primeng.min.css";
+@import "../node_modules/primeflex/primeflex.scss";
+@import "../node_modules/primeicons/primeicons.css";
+
+/* Demos */
+@import "assets/demo/styles/flags/flags.css";
+@import "assets/demo/styles/badges.scss";
+@import "assets/demo/styles/code.scss";
+
+
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+    scrollbar-width: 2px;
+    scrollbar-color: #6f7bb6 #ffffff;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #049f9f;
+    border-radius: 10px;
+    border: 3px solid #ffffff;
+  }
+
+
+.spinner_overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    opacity: 0.2;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  i{color: #f6f6f6;}
+
+
+
+  select {
+    appearance: none;
+    /* safari */
+    -webkit-appearance: none;
+    /* other styles for aesthetics */
+    width: 100%;
+    font-size: 1.15rem;
+    padding: 0.675em 6em 0.675em 1em;
+    background-color: #fff;
+    border: 1px solid #caced1;
+    border-radius: 0.25rem;
+    color: #000;
+    cursor: pointer;
+  }
+
+
+
+
+
+
+/* NO BORDER SPINNER */
+.loader {
+  position: fixed; /* Fix the position */
+  top: 50%; /* Position from the top */
+  left: 50%; /* Position from the left */
+  transform: translate(-50%, -50%); /* Centering trick */
+
+  padding: 20px; /* Padding for content */
+  --size: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* gap: 10px; */
+  gap: calc(var(--size) / 2);
+
+  /* height: 100px; */
+  height: calc(var(--size) * 5);
+  z-index: 1000;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  z-index: 999; /* Ensure the overlay is behind the loader but above the content */
+   /* Initially hidden */
+}
+.loader div {
+  /* width: 20px; */
+  width: var(--size);
+
+  /* height: 20px; */
+  height: var(--size);
+
+  /* border-radius: 20px; */
+  border-radius: var(--size);
+
+  background-color: #ffdd00;
+  animation: wave 2s infinite ease-in-out;
+}
+
+@keyframes wave {
+  /* 0%, 100% {
+    height: 20px;
+    background-color: #ffd700;
+  } */
+
+  25% {
+    /* height: 100px; */
+    height: calc(var(--size) * 5);
+    background-color: #08df37;
+  }
+
+  50% {
+    /* height: 20px; */
+    height: var(--size);
+    background-color: #a4ff2e;
+  }
+
+  /* 100% {
+    height: 20px;
+    background-color: #ffd700;
+  } */
+}
+
+/* .loader :nth-child(1) {
+  animation-delay: 0s;
+} */
+
+.loader :nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.loader :nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.loader :nth-child(4) {
+  animation-delay: 0.6s;
+}
+
+.loader :nth-child(5) {
+  animation-delay: 0.8s;
+}
+
+.p-dialog .p-dialog-header {
+  border-bottom: 1px solid #ececec!important;
+  padding: 9px 19px!important;
+}
+.p-dialog .p-dialog-header .p-dialog-title {
+  font-weight: 800;
+  font-size: 16px;
+}
+
+// .p-datatable .p-datatable-tbody > tr > td {
+//   font-size: 13px;
+//   font-weight: 500;
+// }
+.p-datatable .p-datatable-thead > tr > th,
+.p-datatable .p-datatable-tbody > tr > td{
+  text-align: center;
+}
+.p-datatable .p-datatable-tbody > tr > td{
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.p-tabmenu-nav {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    flex-wrap: nowrap;
+    height: 45px!important;
+}
+
+
+/* CSS */
+.button-62 {
+  background: linear-gradient(to bottom right, #EF4765, #FF9A5A);
+  border: 0;
+  border-radius: 12px;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 2.5;
+  outline: transparent;
+  padding: 0 1rem;
+  text-align: center;
+  text-decoration: none;
+  transition: box-shadow .2s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.button-62:not([disabled]):focus {
+  box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+}
+
+.button-62:not([disabled]):hover {
+  box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+}

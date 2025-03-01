@@ -1,0 +1,150 @@
+
+<div class="grid">
+    <div class="col-12">
+        <div class="card" id="bill">
+          <div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+			<div class="container2">
+				<div class="image">
+					<img src="./assets/demo/images/billing/comp_logo.jpg" class="paid" >
+				</div>
+				<div class="text">
+					<h4 style="margin-left: 4%;">Shridharpur, West Bengal 721632,<br> India,West Bengal,<br> 
+						Mobile: 8535999129</h4>
+				</div>
+				<div style="width: 20px !important;">
+					<svg #barcodeSVG ></svg>
+				</div>
+			  </div>
+    		
+    			
+    		
+			<div class="text-right" style="background-color: beige;width: 100%;border-top:5px solid burlywood; padding-right: 5px;">
+				<!-- <div class="col-md-6 text-left" style="padding-left:2%;"> -->
+                   
+    				<span>
+						<strong>Invoice Id:</strong>&nbsp;&nbsp;
+    					{{ListData[0].billing_id}}<br>
+					</span>	
+				<!-- <div class="col-md-6 text-right" style="padding-right:2%;"> -->
+    					<span >
+							<strong>Invoice Date:</strong>
+							{{ListData[0].billingdate}}
+						</span>
+                <!-- </div> -->
+			</div>
+    		<div class="row" style="margin-left: 4%;">
+    			<div class="col-xs-6">
+    				<address>
+    				<strong>Billed To:</strong><br>
+                    <strong>Customer Name: </strong>{{CustomerDtls.name}}<br>
+    				<strong>Mobile Number: </strong>{{CustomerDtls.mobile_no}}<br>
+    				<strong>Address: </strong>{{CustomerDtls.adress}}<br>
+                    <!-- {{CustomerDtls.name}}<br> -->
+    				</address>
+    			</div>
+                
+    		</div>
+    	</div>
+    </div>
+    
+    <div class="row">
+    	<div class="field col-12 md:col-12">
+    		<div class="panel panel-default">
+    			<div class="panel-heading">
+    				<h3 class="card flex justify-content-center"><strong>Purchase summary</strong></h3>
+    			</div>
+                    <p-table #dt2 [value]="FinalData" >
+                        <ng-template pTemplate="header" #hdd>
+                                <tr style="background-color: rgb(225, 203, 174);">
+        							<td class="text-left" style="padding-left:2%"><strong>ITEMS</strong></td>
+        							<td class="text-left" style="padding-left:2%"><strong>Serial No.</strong></td>
+        							<td class="text-center"><strong>QTY.</strong></td>
+        							<td class="text-center"><strong>Warranty upto</strong></td>
+        							<!-- <td class="text-center"><strong>Warranty</strong></td> -->
+        							<td class="text-right" style="padding-right:2%;"><strong>Price</strong></td>
+        							<!-- <td class="text-right" style="padding-right:2%;"><strong>Totals</strong></td> -->
+                                </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-ListData>
+							<!-- foreach ($order->lineItems as $line) or some such thing here -->
+							<tr>
+								<td class="text-left">{{ ListData.product_name}}- {{ ListData.model_name }}</td>
+								<td  class="text-left">{{ListData.serial_numbers}}
+									<!-- <ng-container *ngFor="let sl of ListData.serial_numbers">
+										{{ sl.serial_numbers}},
+									</ng-container>  -->
+								</td>
+								
+								<td class="text-center">{{ ListData.quantity }}PCS</td>
+								<td class="text-center">{{ ListData.sels_warranty }}</td>
+								<!-- <td class="text-center">{{ ListData.sels_warranty }}</td> -->
+								<!-- <td class="text-center">{{ ListData.w_i_m}}MONTH</td> -->
+								<td class="text-right">{{ ListData.sales_rate |currency:"INR"}}</td>
+								<!-- <td class="text-right">{{ tot_price |currency:"INR"}}</td> -->
+							</tr>
+							
+					</ng-template> 
+					<ng-template pTemplate="footer">
+					<tr style="border-top:3px solid #ce7843  important;border-bottom:3px solid #ce7843;">
+								<td colspan="2" class="text-left">SUBTOTAL</td>
+								<td class="text-center">{{ totQTY}}PCS</td>
+								<td colspan="2" class="text-right">{{tot_price|currency:"INR"}}</td>
+							</tr>
+					</ng-template>
+						<!-- foreach ($order->lineItems as $line) or some such thing here -->
+						
+						
+				
+    					</p-table>
+
+                        
+    		<div class="row">
+    			<div class="col-xs-6 text-right" style="font-size: larger;"><br>
+
+                    <strong>TOTAL:</strong> <b>{{tot_price |currency:"INR"  }}</b><br><br>
+					<!-- <div *ngIf="Paid">
+						<img src="./assets/demo/images/access/paid.png" class="paid" >
+					</div>
+					<div *ngIf="Due">
+                    	<img src="./assets/demo/images/access/due.png" class="due" >
+					</div> -->
+    			</div>
+				<div class="col-xs-6 text-left"><br>
+
+                    <strong>TERMS AND CONDITIONS</strong> <br>
+					<p> 1. Goods once sold will not be taken back or exchanged<br>
+						2. Warranty is not liable if the goods are Burnt,<br>
+						Broken, Lequid Damage or missing warranty<br>
+						sticker.<br>
+						3. Subject to "West Bengal" jurisdiction only.</p>
+					
+    			</div>
+				<div class="col-xs-6 text-right" style="font-size: larger;">
+					<strong>Authorised Signatory</strong>
+				</div>
+    		</div>
+    				</div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div  class="flex justify-content-center">
+        <div class="field col-12 md:col-2">
+            <button pButton pRipple printSectionId="bill" [useExistingCss]="true" ngxPrint   label="Print" icon="pi pi-print" class="p-button-primary"></button>
+			<!-- <input #barcodeValue placeholder="En00001A" />
+			<button (click)="generateBarcode()">Generate Barcode</button>
+			<svg #barcodeSVG></svg> -->
+		</div>
+        </div>
+</div>
+</div>
+<div class="loader" *ngIf="spinner">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div><div class="overlay" *ngIf="spinner"></div>

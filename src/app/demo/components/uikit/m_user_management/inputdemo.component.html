@@ -1,0 +1,119 @@
+<div class="col-12">
+	<div class="card">
+		<h5>Add/Edit User</h5>
+		<form [formGroup]="stockIn">
+			<div class="p-fluid p-formgrid grid">
+				<div class="field col-12 md:col-4 custom-select" >
+					<label htmlFor="firstname2">Select Organization</label>
+					<select formControlName="org_id" style="width: 100%;height: 39px;border-color: lightgray;border-radius: 5px;" (change)="setUser()">
+						<option value="0" disabled selected>Select an option</option>
+						<option *ngFor="let option of companys" [value]="option.organization_id">
+						  {{option.organization_name}}
+						</option>
+					  </select>
+				</div>
+				<div class="field col-12 md:col-4">
+					<label htmlFor="firstname2">Select User</label>
+					<select formControlName="user_id" style="width: 100%;height: 39px;border-color: lightgray;border-radius: 5px;">
+						<option value="0" disabled selected>Select an option</option>
+						  <option *ngFor="let option of users" [value]="option.user_id">
+							{{option.user_name}}
+						  </option>
+					  </select>
+				</div>
+				
+				<div class="field col-12 md:col-4">
+					<label htmlFor="firstname2">Select Device</label>
+					<select formControlName="device_id" style="width: 100%;height: 39px;border-color: lightgray;border-radius: 5px;"  (change)="deviceChange($event.target.value)">
+						<option value="0" disabled selected>Select an option</option>
+						<option *ngFor="let option of models" [value]="option.device_id">
+							{{option.device}}
+						  </option>
+					  </select>
+				</div>
+				
+				
+				  <!-- <button type="button" (click)="addSkill()">Add Skill</button> -->
+				  <!-- <p-button label="Submit" icon="pi pi-check" styleClass="p-button-success"></p-button> -->
+				  <!-- <button type="submit" [disabled]="stockIn.invalid">Submit</button> -->
+				
+			</div>
+			<div class="p-fluid p-formgrid grid">
+				<div class="field col-12 md:col-2" >
+
+					<p-button icon="pi pi-check" (click)="insertStockData()" styleClass="p-button-primary " label="Save"></p-button>
+				
+				</div>
+				<div class="field col-12 md:col-2" >
+					<p-button icon="pi pi-refresh" (click)="resetData()" styleClass="p-button-danger" label="Reset"></p-button>
+	
+				</div>
+			</div>
+			
+			
+		</form>
+		
+	</div>
+</div>
+
+<p-toast></p-toast>
+<div class="col-12" style="max-height:400px; overflow: scroll;">
+<p-table #dt2 [value]="stockListAll" 
+[tableStyle]="{ 'min-width': '50rem'}">
+    <!-- <ng-template pTemplate="caption">
+        <div class="flex">
+            <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText pAutoFocus [autofocus]="true" type="text" (keyup)="searchAll($event)" placeholder="Search keyword" />
+            </span>
+        </div>
+    </ng-template> -->
+	<ng-template pTemplate="header">
+        <tr>
+            <th>Sl No</th>
+            <th>Device Name</th>
+            <th>User Name</th>
+            <th>Organization Name</th>
+            <th>IMEI No</th>
+
+            <th>model </th>
+            <th>Status </th>
+			
+            <th style="width: 5rem">Edit</th>
+            <th style="width: 5rem">Delete</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowIndex="rowIndex" let-stockList>
+        <tr>
+            <td>{{ rowIndex+1 }}</td>
+            <td>{{ stockList.device }}</td>
+            <td>{{ stockList.user_name }}</td>
+            <td>{{ stockList.organization_name }}</td>
+            <td>{{ stockList.imei_no }}</td>
+            <td>{{ stockList.model }}</td>
+            <td>{{ stockList.user_active_status=='Y'?'Active':'Deactive' }}</td>
+            <td>
+                <button type="button" pButton pRipple icon="pi pi-pencil" (click)="selectProduct(stockList)"></button>
+            </td>
+			<td>
+				<p-button  type="button"  pRipple icon="pi pi-trash" styleClass="p-button-danger" (click)="stockDelete(stockList)"></p-button>
+			</td>
+        </tr>
+    </ng-template>
+	
+</p-table>
+<div class="card flex justify-content-center">
+    <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="totalPGNO" ></p-paginator>
+</div>
+
+</div>
+<div class="loader" *ngIf="spinner">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div><div class="overlay" *ngIf="spinner"></div>
+
+<p-toast></p-toast>
+

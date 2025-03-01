@@ -1,0 +1,783 @@
+<div class="grid">
+
+  <div class="col-12 lg:col-6 xl:col-4">
+    <p-dropdown (onChange)="onChange($event)"
+    [options]="countries1"
+    [(ngModel)]="selectedCountry1"
+    variant="filled"
+    optionLabel="name"
+    placeholder="Billing Report"
+    styleClass="w-23rem" />
+  </div>
+  <!-- <div class="col-12 lg:col-6 xl:col-3">
+    <p-dropdown
+    [options]="countries2"
+    [(ngModel)]="selectedCountry2"
+    [disabled]="true"
+    variant="filled"
+    optionLabel="name"
+    placeholder="Weather Consumption Analysis"
+    styleClass="w-23rem"/>
+  </div>
+  <div class="col-12 lg:col-6 xl:col-2">
+    <p-dropdown
+    [options]="countries3"
+    [(ngModel)]="selectedCountry3"
+    [disabled]="true"
+    variant="filled"
+    optionLabel="name"
+    placeholder="Other Analysis"
+    styleClass="w-15rem"/>
+  </div> -->
+  <div class="col-12 lg:col-6 xl:col-8 text-blue-600 text-xl">
+    <p>{{selectedName?selectedName:''}}</p>
+  </div>
+
+      <!-- <section class="vh-100 d-flex align-items-center justify-content-center">
+        <div class="dropdown custom-dropdown status_dropdown" data-color="created-status">
+          <button class="btn dropdown-toggle w-100 d-flex align-items-center justify-content-between status__btn"
+            type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="0,12">
+            Created
+          </button>
+          <ul class="dropdown-menu status_change" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" data-class="created" href="#">Created</a></li>
+            <li><a class="dropdown-item" data-class="support" href="#">Support</a></li>
+            <li><a class="dropdown-item" data-class="inprogress" href="#">In Progress</a></li>
+            <li><a class="dropdown-item" data-class="finished" href="#">Finished</a></li>
+            <li><a class="dropdown-item" data-class="rejected" href="#">Rejected</a></li>
+          </ul>
+        </div>
+      </section> -->
+
+      <!-- <select  class="header-btn1" name="city"  (change)="navigate($event)">
+        <option >  <i class="fa fa-caret-down"></i>Billing Report</option>
+        <option *ngFor="let country of countries1">{{country.name}}</option>
+        </select> -->
+      <!-- <button class="dropbtn" id="header-btn1" (click)="showBilling1()">
+        Billing Report
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content" *ngIf="showBillingSubMenu1">
+        <a >Weather Usage and Billing</a>
+        <a >Billing & Income</a>
+        <a >Monthly bill forecast</a>
+        <a >Multi months bill report</a>
+        <a >Battery Simulation and Billing Analysis</a>
+      </div> -->
+
+    <!-- <div class="dropdown">
+      <select  class="header-btn2" name="city"  (change)="navigate($event)">
+        <option selected> Weather Consumption Analysis</option>
+        <option *ngFor="let country of countries2">{{country.name}}</option>
+        </select> -->
+      <!-- <button class="dropbtn" id="header-btn2"  (click)="showBilling2()">
+        Weather Consumption Analysis
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content" *ngIf="showBillingSubMenu2">
+        <a >Weather Usage and Billing</a>
+        <a >Billing & Income</a>
+        <a >Monthly bill forecast</a>
+        <a >Multi months bill report</a>
+        <a >Battery Simulation and Billing Analysis</a>
+      </div> -->
+    <!-- </div> -->
+      <!-- <div class="dropdown">
+        <select  class="header-btn3" name="city"  (change)="navigate($event)">
+          <option selected>  Other Analysis</option>
+          <option *ngFor="let country of countries3">{{country.name}}</option>
+          </select> -->
+          <!-- <button class="dropbtn" id="header-btn3"  (click)="showBilling3()">
+          Other Analysis
+          <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content" *ngIf="showBillingSubMenu3">
+          <a >Weather Usage and Billing</a>
+          <a >Billing & Income</a>
+          <a >Monthly bill forecast</a>
+          <a >Multi months bill report</a>
+          <a >Battery Simulation and Billing Analysis</a>
+          </div> -->
+      <!-- </div> -->
+
+  </div>
+  <div>
+      <table style="width:100%" id="table1" *ngIf="selectedID=='b1'">
+          <tr>
+            <td >Report Type</td>
+            <td >
+              <form  class="form-select">
+                  <label>
+                      <input type="radio" id="m-report" [(ngModel)]="datetype" [ngModelOptions]="{standalone: true}"  checked name="fav_language" (change)="dateTypeChange($event.target.value)" value="M">
+                      Monthly
+                  </label>
+                  <label>
+                      <input type="radio" id="y-report" [(ngModel)]="datetype" [ngModelOptions]="{standalone: true}"  name="fav_language" (change)="dateTypeChange($event.target.value)"  value="Y">
+                      Yearly
+                  </label>
+                  <label>
+                     <input type="radio" id="Customize" [(ngModel)]="datetype" [ngModelOptions]="{standalone: true}" name="fav_language" (change)="dateTypeChange($event.target.value)"  value="C">
+                      Custom
+                  </label>
+              </form>
+            </td>
+            <td>Meter</td>
+            <td >
+              <div >
+                <p-dropdown
+                [options]="deviceList"
+                [(ngModel)]="selectedDevice"
+                variant="filled"
+                optionLabel="device"
+                placeholder="Select device"
+                styleClass="w-12rem"/>
+
+                </div>
+            </td>
+            <td >Select Time</td>
+            <td *ngIf="showMonth">
+              <p-calendar
+                  [(ngModel)]="month"
+                  view="month"
+                  dateFormat="mm/yy"
+                  placeholder="Select Month"
+                  [readonlyInput]="true"
+                  [iconDisplay]="'input'"
+                  [showIcon]="true"
+                  inputId="icondisplay"/>
+
+              <!-- <input type="month" id="bdaymonth" name="bdaymonth" value="2024-05" > -->
+            </td>
+            <td *ngIf="showyear">
+              <p-calendar
+                  [(ngModel)]="year"
+                  view="year"
+                  dateFormat="yy"
+                  placeholder="Select Year"
+                  [readonlyInput]="true"
+                  [iconDisplay]="'input'"
+                  [showIcon]="true"
+                  inputId="icondisplay"/>
+              <!-- <input type="year" id="bdaymonth" name="bdaymonth" value="2024" > -->
+            </td>
+            <td *ngIf="showDateTime">
+              <p-calendar
+              [(ngModel)]="rangeDates"
+              selectionMode="range"
+              [readonlyInput]="true"
+              [showIcon]="true"  />
+
+              <!-- <input type="datetime" id="bdaymonth" name="bdaymonth" value="2024-05-01 00:00" > -->
+            </td>
+            <td>
+              <button class="button button1" (click)="ShowHideTable()">View</button>
+              <button class="button button2" (click)="exportToExcel()">Export</button>
+
+            </td>
+          </tr>
+        </table>
+        <table style="width:100%" id="table1" *ngIf="selectedID=='b2'">
+          <tr>
+            <td >Report Type</td>
+            <td >
+              <form action="" class="form-select">
+                  <label>
+                      <input type="radio" id="m-report" checked name="fav_language" (change)="dateTypeChange($event.target.value)" value="M">
+                      Monthly Report
+                  </label>
+                  <label>
+                      <input type="radio" id="y-report" name="fav_language" (change)="dateTypeChange($event.target.value)"  value="Y">
+                      Yearly Report
+                  </label>
+
+              </form>
+            </td>
+
+            <td >Select Time</td>
+            <td *ngIf="showMonth">
+              <p-calendar
+                  [(ngModel)]="month"
+                  view="month"
+                  dateFormat="mm/yy"
+                  placeholder="Select Month"
+                  [readonlyInput]="true"
+                  [iconDisplay]="'input'"
+                  [showIcon]="true"
+                  inputId="icondisplay"/>
+
+              <!-- <input type="month" id="bdaymonth" name="bdaymonth" value="2024-05" > -->
+            </td>
+            <td *ngIf="showyear">
+              <p-calendar
+                  [(ngModel)]="year"
+                  view="year"
+                  dateFormat="yy"
+                  placeholder="Select Year"
+                  [readonlyInput]="true"
+                  [iconDisplay]="'input'"
+                  [showIcon]="true"
+                  inputId="icondisplay"/>
+              <!-- <input type="year" id="bdaymonth" name="bdaymonth" value="2024" > -->
+            </td>
+            <td *ngIf="showDateTime">
+              <p-calendar
+                  inputId="calendar-12h"
+                  [(ngModel)]="datetime12h"
+                  [showTime]="true"
+                  [hourFormat]="12"
+                  placeholder="Select DateTime"
+                  [readonlyInput]="true"
+                  [iconDisplay]="'input'"
+                  [showIcon]="true"
+                  inputId="icondisplay"/>
+              <!-- <input type="datetime" id="bdaymonth" name="bdaymonth" value="2024-05-01 00:00" > -->
+            </td>
+            <td>
+              <button class="button button1" (click)="ShowHideTable()">View</button>
+              <button class="button button2">Export</button>
+
+            </td>
+          </tr>
+        </table>
+        <div class="grid" style="width:100%" *ngIf="selectedID=='b3'">
+          <div class="col-12 lg:col-6 xl:col-6">
+            <div class="card"><h4>Weather Forecast</h4>
+              <apx-chart
+              [series]="chartOptions.series"
+              [chart]="chartOptions.chart"
+              [plotOptions]="chartOptions.plotOptions"
+              [labels]="chartOptions.labels"
+            ></apx-chart>
+              <table style="width: 100%;">
+                <tbody>
+                  <tr>
+                    <td style="background-color: #24e6a4;">Current</td>
+                    <td>181.77 kWh</td>
+                  </tr>
+                  <tr>
+                    <td style="background-color: #249efa;">Forecast</td>
+                    <td>249.00 kWh</td>
+                  </tr>
+                  <tr>
+                    <td>Target</td>
+                    <td>
+                      <p-button icon="pi pi-spin pi-cog" [rounded]="true" [text]="true" severity="success " />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+             </div>
+          </div>
+          <div class="col-12 lg:col-6 xl:col-6">
+            <div class="card">
+              <h4>Bill Forecast</h4>
+              <apx-chart
+              [series]="chartOptions2.series"
+              [chart]="chartOptions2.chart"
+              [plotOptions]="chartOptions2.plotOptions"
+              [labels]="chartOptions2.labels"
+            ></apx-chart>
+            <table style="width: 100%;">
+              <tbody>
+                <tr>
+                  <td style="background-color: #24e6a4;">Current</td>
+                  <td>211 ($)</td>
+                </tr>
+                <tr>
+                  <td style="background-color: #249efa;">Forecast</td>
+                  <td>255 ($)</td>
+                </tr>
+                <tr>
+                  <td>Target</td>
+                  <td>
+                    420.25 ($)
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+             </div>
+          </div>
+
+        </div>
+        <table style="width:100%" id="table1" *ngIf="selectedID=='b4'">
+          <tr>
+            <td >Report Type</td>
+            <td >
+              <form action="" class="form-select">
+                  <label>
+                      <input type="radio" id="m-report" checked name="fav_language" (change)="dateTypeChange($event.target.value)" value="M">
+                      Monthly Report
+                  </label>
+                  <label>
+                      <input type="radio" id="y-report" name="fav_language" (change)="dateTypeChange($event.target.value)"  value="Y">
+                      Yearly Report
+                  </label>
+
+              </form>
+            </td>
+
+            <td >Select Time</td>
+            <td *ngIf="showMonth">
+              <p-calendar
+                  [(ngModel)]="month"
+                  view="month"
+                  dateFormat="mm/yy"
+                  placeholder="Select Month"
+                  [readonlyInput]="true"
+                  [iconDisplay]="'input'"
+                  [showIcon]="true"
+                  inputId="icondisplay"/>
+
+              <!-- <input type="month" id="bdaymonth" name="bdaymonth" value="2024-05" > -->
+            </td>
+            <td *ngIf="showyear">
+              <p-calendar
+                  [(ngModel)]="year"
+                  view="year"
+                  dateFormat="yy"
+                  placeholder="Select Year"
+                  [readonlyInput]="true"
+                  [iconDisplay]="'input'"
+                  [showIcon]="true"
+                  inputId="icondisplay"/>
+              <!-- <input type="year" id="bdaymonth" name="bdaymonth" value="2024" > -->
+            </td>
+            <td *ngIf="showDateTime">
+              <p-calendar
+                  inputId="calendar-12h"
+                  [(ngModel)]="datetime12h"
+                  [showTime]="true"
+                  [hourFormat]="12"
+                  placeholder="Select DateTime"
+                  [readonlyInput]="true"
+                  [iconDisplay]="'input'"
+                  [showIcon]="true"
+                  inputId="icondisplay"/>
+              <!-- <input type="datetime" id="bdaymonth" name="bdaymonth" value="2024-05-01 00:00" > -->
+            </td>
+            <td>
+              <button class="button button1" (click)="ShowHideTable()">View</button>
+              <button class="button button2">Export</button>
+
+            </td>
+          </tr>
+        </table>
+  </div>
+  <br>
+
+  <div class="table" *ngIf="showTable1 && selectedID=='b1'">
+    <div class="card">
+      <p-toast></p-toast>
+      <h5 class="m-2">Billing Details</h5>
+      <p-table id="my-table"
+          #dt
+          [value]="BillingList"
+          [rows]="10"
+          [paginator]="true"
+          [globalFilterFields]="['total_weather', 'price', 'date', 'time']"
+          [tableStyle]="{ 'min-width': '75rem' }"
+          [(selection)]="selectedProducts"
+          [rowHover]="true"
+          dataKey="id"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [showCurrentPageReport]="true"
+      >
+
+
+          <ng-template pTemplate="header">
+              <tr>
+
+                <th>Sl No.</th>
+                <th>DateTime</th>
+                <th>Weather Used</th>
+                <th >Electricity Bill</th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowIndex="rowIndex" let-product>
+              <tr>
+                 <td>{{rowIndex+1}}</td>
+                  <td>{{product.date}}&nbsp;&nbsp;{{product.time}}</td>
+                  <td>{{product.total_weather}} kWh</td>
+                  <td>{{BillingDtls?.currency_symbol}}{{product.price | number:'1.2-2'}}</td>
+                  <!-- <td>
+                      <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(product)"></button>
+                      <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteProduct(product.device_id)"></button>
+                  </td> -->
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="summary">
+              <div class="flex align-items-center justify-content-between">In total there are {{ BillingList ? BillingList.length : 0 }} Bills.</div>
+          </ng-template>
+      </p-table>
+  </div>
+
+
+
+
+   <!-- <table style="width:100%"  id="my-table">
+         <thead>
+            <tr>
+              <th>Sl No.</th>
+              <th>DateTime</th>
+              <th>Weather Used</th>
+              <th >Electricity Bill</th>
+          </tr>
+         </thead>
+       <tbody>
+        <tr *ngFor="let data of BillingList; index as i">
+          <td>{{i+1}}</td>
+          <td>{{data.date}}&nbsp;&nbsp;{{data.time}}</td>
+          <td>{{data.total_weather}} kWh</td>
+          <td>{{BillingDtls?.currency_symbol}}{{data.price | number:'1.2-2'}}</td>
+        </tr>
+       </tbody>
+        </table> -->
+
+  </div>
+  <div class="table" *ngIf="showTable2 && selectedID=='b2'">
+    <table style="width: 100%;">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Grid Consumption (kWh)</th>
+          <th>Bill ($)</th>
+          <th>Exported Weather (kWh)</th>
+          <th>Income ($)</th>
+          <th>Balance ($)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2024-05-01</td>
+          <td>10.75</td>
+          <td>8.6</td>
+          <td>0</td>
+          <td>0</td>
+          <td>-8.6</td>
+        </tr>
+        <tr>
+          <td>2024-05-02</td>
+          <td>10.76</td>
+          <td>8.61</td>
+          <td>0</td>
+          <td>0</td>
+          <td>-8.61</td>
+        </tr>
+        <tr>
+          <td>2024-05-03</td>
+          <td>10.77</td>
+          <td>8.62</td>
+          <td>0</td>
+          <td>0</td>
+          <td>-8.62</td>
+        </tr>
+        <tr>
+          <td>2024-05-04</td>
+          <td>10.79</td>
+          <td>8.63</td>
+          <td>0</td>
+          <td>0</td>
+          <td>-8.63</td>
+        </tr>
+        <tr>
+          <td>2024-05-05</td>
+          <td>10.66</td>
+          <td>8.53</td>
+          <td>0</td>
+          <td>0</td>
+          <td>-8.53</td>
+        </tr>
+        <tr>
+          <td>2024-05-06</td>
+          <td>13.71</td>
+          <td>10.97</td>
+          <td>0</td>
+          <td>0</td>
+          <td>-10.97</td>
+        </tr>
+        <tr>
+          <td>2024-05-07</td>
+          <td>10.75</td>
+          <td>8.6</td>
+          <td>0</td>
+          <td>0</td>
+          <td>-8.6</td>
+        </tr>
+        <tr>
+          <td>2024-05-08</td>
+          <td>10.79</td>
+          <td>8.63</td>
+          <td>0</td>
+          <td>0</td>
+          <td>-8.63</td>
+        </tr>
+        <tr>
+          <td>2024-05-09</td>
+          <td>10.83</td>
+          <td>8.66</td>
+          <td>0</td>
+          <td>0</td>
+          <td>-8.66</td>
+        </tr>
+        <tr>
+          <td>2024-05-10</td>
+          <td>10.85</td>
+          <td>8.68</td>
+          <td>0</td>
+          <td>0</td>
+          <td>-8.68</td>
+        </tr>
+        <tr>
+          <td>2024-05-11</td>
+          <td>7.17</td>
+          <td>5.74</td>
+          <td>0</td>
+          <td>0</td>
+          <td>-5.74</td>
+        </tr>
+        <tr>
+          <td>2024-05-12</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>2024-05-13</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>2024-05-14</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>2024-05-15</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>2024-05-16</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>2024-05-17</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>2024-05-18</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>2024-05-19</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>2024-05-20</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>2024-05-21</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>2024-05-22</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+      </table>
+
+</div>
+<div class="table" *ngIf="showTable4 && selectedID=='b4'">
+  <table style="width: 100%;">
+    <thead>
+      <tr>
+        <th>Month</th>
+        <th>Grid Consumption (kWh)</th>
+        <th>Bill ($)</th>
+        <th>Exported Weather (kWh)</th>
+        <th>Income ($)</th>
+        <th>Balance ($)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>2023-02</td>
+        <td>10.75</td>
+        <td>8.6</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-8.6</td>
+      </tr>
+      <tr>
+        <td>2023-03</td>
+        <td>10.76</td>
+        <td>8.61</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-8.61</td>
+      </tr>
+      <tr>
+        <td>2023-04</td>
+        <td>10.77</td>
+        <td>8.62</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-8.62</td>
+      </tr>
+      <tr>
+        <td>2023-05</td>
+        <td>10.79</td>
+        <td>8.63</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-8.63</td>
+      </tr>
+      <tr>
+        <td>2023-06</td>
+        <td>10.66</td>
+        <td>8.53</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-8.53</td>
+      </tr>
+      <tr>
+        <td>2023-07</td>
+        <td>13.71</td>
+        <td>10.97</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-10.97</td>
+      </tr>
+      <tr>
+        <td>2023-08</td>
+        <td>10.75</td>
+        <td>8.6</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-8.6</td>
+      </tr>
+      <tr>
+        <td>2024-09</td>
+        <td>10.83</td>
+        <td>8.66</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-8.66</td>
+      </tr>
+      <tr>
+        <td>2023-10</td>
+        <td>10.85</td>
+        <td>8.68</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-8.68</td>
+      </tr>
+      <tr>
+        <td>2023-11</td>
+        <td>7.17</td>
+        <td>5.74</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-5.74</td>
+      </tr>
+      <tr>
+        <td>2023-12</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>2024-01</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>2024-02</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>2024-03</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>2024-04</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>2024-05</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+
+    </table>
+
+</div>
+
+
+
+<div class="loader" *ngIf="spinner">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div><div class="overlay" *ngIf="spinner"></div>

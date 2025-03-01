@@ -1,0 +1,161 @@
+<div class="grid p-fluid">
+    <!-- <div class="col-12 lg:col-12">
+        <div class="card">
+            <div class="p-fluid p-formgrid grid">
+                <div class="field col-12 md:col-3">
+                    <label htmlFor="lastname2">Site Name</label>
+                    <input pInputText  type="text" />
+                </div>  
+                <div class="field col-12 md:col-2">
+                    <label htmlFor="lastname2">Capacity (HP)</label>
+                    <input pInputText  type="text" />
+                </div>
+                <div class="field col-12 md:col-2">
+                    <label htmlFor="lastname2">Date of Installation</label>
+						<span class="p-input-icon-right">
+						<p-calendar dateFormat="dd/mm/yy" [showButtonBar]="true"></p-calendar>
+						<i class="pi pi-calendar"></i>
+						</span>
+                </div>
+                <div class="field col-12 md:col-1">
+                    <label htmlFor="lastname2">Log (min)</label>
+                    <input pInputText  type="text" />
+                </div>
+                <div class="field col-12 md:col-1" style="margin-top: 2%;">
+                    <p-button styleClass="p-button-primary " label="Update"></p-button>
+                </div>
+                
+            </div>
+           
+        </div>
+
+    </div>
+    -->
+    <div class="col-12 lg:col-12">
+    <div class="card" style="padding: 0!important;">
+        <div class="grid" style="margin-left: 0rem!important;">
+           
+            <!-- <div class="col-12 lg:col-2 xl:col-1">
+                <div class="livenow">
+                  <div></div>
+                  <h5>Live</h5>
+                </div>
+           </div> -->
+
+           <!-- <div class="col-12 lg:col-2 xl:col-7">
+            <h4 style=" margin-top: 32px;">Last Updated: {{lastUpdateTime}}</h4></div> -->
+           <!-- <div class="col-12 lg:col-1 xl:col-1">
+            <span >Run Time</span>
+            <div class="text-900 font-medium text-xl">2.8 Hrs</div>
+           </div>  -->
+            <div class="field col-12 md:col-3" style=" position: absolute;
+            z-index: 1;
+            right: 32px;">
+            <label>&nbsp;</label>
+            <p-autoComplete [(ngModel)]="selectedDealer" [ngModelOptions]="{standalone: true}" placeholder="ABCDE01001" (onSelect)="setDevice()" [suggestions]="filteredDealer" (completeMethod)="filterDealer($event)" field="device_name" [dropdown]="true">
+            </p-autoComplete>
+            </div>
+            <div class="field col-12 md:col-12" >
+                
+<div >
+    <p-tabView styleClass="tabview-custom" style="width: 100%!important;">
+       
+        <p-tabPanel header="Header I" >
+            <ng-template pTemplate="header" style="width: 30%;">
+                <img src="assets/demo/images/access/ups.png" alt="logo" height="70px">
+                <span></span>
+                <span  style="font-size: xx-large!important;">UPS</span>
+                &nbsp;
+            </ng-template>
+            <div class="grid" style="margin-left: 0rem!important;">
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <h4>Map View</h4>
+                    <div class="card">
+                    <img src="assets/demo/images/access/map.png" alt="logo" class="weather">
+                    </div>
+                    
+                </div>
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <h4>Device Information</h4>
+                    <div class="grid" style="margin-left: 0rem!important;">
+                        <div class="col-12 lg:col-6 xl:col-6">
+                            <div class="card mb-0 xcard" style="background-color: rgb(210 211 255)">
+                                <div class="flex justify-content-between mb-3">
+                                    <div>
+                                        <span class="block font-large mb-3" style="font-size:large!important;color: #1a4c03;">BATTERY</span>
+                                        <div style="color: rgb(4, 14, 105);font-weight: 700;font-size: larger;">400.90KW</div>
+                                    </div>
+                                    <div class="BCylindre">
+                                        <div class="NiMH"></div>
+                                        <div class="PPole"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 lg:col-6 xl:col-6">
+                            <div class="card mb-0 xcard" style="background-color: rgb(210 211 255)">
+                                <div class="flex justify-content-between mb-3">
+                                    <div>
+                                        <span class="block font-large mb-3" style="font-size:large!important;color: #23510d;">AVAILABLE BATTERY</span>
+                                        <div style="color: rgb(98, 10, 72);font-weight: 700;font-size: larger;">60%</div>
+                                    </div>
+                                    <div class="UPSCylindre">
+                                        <div class="NiMH"></div>
+                                        <div class="PPole"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        </div>
+                         
+                </div>
+                <div class="col-12 lg:col-6 xl:col-12">
+                    <div class="card" >
+                        <h4>Description</h4>
+                    <p>Model &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ABCDE01001</p><hr>
+                    <p>Site Name &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  NOIDA</p><hr>
+                    <p>Specifications &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Battery</p><hr>
+                    <p>Last Maintenance &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  23-02-2023  12:23:24</p>
+                    </div>
+                </div>
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <div class="card" >
+                        <h5>BATTERY</h5>
+                            <p-chart type="bar" [data]="data" [options]="lineOptions"></p-chart>
+                        
+                    </div>
+                </div>
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <div class="card" >
+                        <h5>BATTERY LIFE</h5>
+                        <p-chart type="line" [data]="flow2" [options]="lineOptions"></p-chart>
+                    </div>
+                    
+                </div>
+                <div class="col-12 lg:col-6 xl:col-12">
+                    <div class="card" >
+                       <b style="font-size: large;">Month</b>&nbsp;&nbsp;&nbsp;&nbsp; <p-inputSwitch [(ngModel)]="checked"></p-inputSwitch>
+                       &nbsp;&nbsp;&nbsp;<b  style="font-size: large;">Day (BATTERY Usage)</b>
+                      
+                        <p-chart type="bar" [data]="barData" [options]="barOptions"  style="max-height: 300px;"></p-chart>
+                    </div>
+                </div>
+                
+                </div>
+        </p-tabPanel>
+       
+    </p-tabView>
+</div>
+                </div>
+        </div> 
+    </div>
+        
+          
+       
+     
+
+    </div>
+   
+</div>

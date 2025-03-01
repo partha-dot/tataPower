@@ -1,0 +1,99 @@
+<div class="card flex justify-content-end py-2 px-1 rounded-sm">
+    <form [formGroup]="device_form">
+        <p-autoComplete formControlName="device" placeholder="Select a device" [suggestions]="filtered_device"
+            (completeMethod)="filterDevice($event)"
+            (onSelect)="setDevice()"
+            field="device" [dropdown]="true" />
+    </form>
+</div>
+<div class="grid">
+    <div class="col-12">
+        <chart-content-holder [cardTitle]="'Temperature'"
+            [cardSubTitle]="'Temperature, measure of hotness or coldness '">
+            <div form >
+                <form [formGroup]="graph_date_form">
+                    <div formGroupName="temparature">
+                        <date-calendar formControlName="start_date"></date-calendar>
+                    </div>
+                </form>
+            </div>
+            <div content class="px-1 w-full">
+                    <apex-chart-core [chartDT]="md_temparature | chartDTFormater:'temperature'"></apex-chart-core>
+            </div>
+        </chart-content-holder>
+    </div>
+    <div class="col-12">
+        <chart-content-holder [cardTitle]="'Rainfall'" [cardSubTitle]="'Temperature, measure of hotness or coldness '">
+            <div form>
+                <form [formGroup]="graph_date_form">
+                    <div formGroupName="rainfall">
+                        <date-calendar formControlName="start_date"></date-calendar>
+                    </div>
+                </form>
+            </div>
+            <div content class="px-1 w-full">
+                <apex-chart-core [chartDT]="md_rainfall | chartDTFormater:'rainfall'"></apex-chart-core>
+            </div>
+        </chart-content-holder>
+    </div>
+    <div class="col-12">
+        <chart-content-holder [cardTitle]="'Atm Pressure'"
+            [cardSubTitle]="'Temperature, measure of hotness or coldness '">
+            <div form>
+                <form [formGroup]="graph_date_form">
+                    <div formGroupName="atm_pressure">
+                        <date-calendar formControlName="start_date"></date-calendar>
+                    </div>
+                </form>
+            </div>
+            <div content class="px-1 w-full">
+                <apex-chart-core [chartDT]="md_atm_pressure | chartDTFormater:'atm_pressure'"></apex-chart-core>
+        </div>
+        </chart-content-holder>
+    </div>
+    <div class="col-6">
+        <chart-content-holder [cardTitle]="'Solar Radiation'"
+            [cardSubTitle]="'Temperature, measure of hotness or coldness '">
+            <div form>
+                <form [formGroup]="graph_date_form">
+                    <div formGroupName="solar_radiation">
+                        <date-calendar formControlName="start_date"></date-calendar>
+                    </div>
+                </form>
+            </div>
+            <div content class="px-1 w-full">
+                <apex-chart-core [chartDT]="md_solar_radiation | chartDTFormater:'solar_radiation'"></apex-chart-core>
+            </div>
+        </chart-content-holder>
+    </div>
+    <div class="col-6">
+        <chart-content-holder [cardTitle]="'Humidity'" [cardSubTitle]="'Temperature, measure of hotness or coldness '">
+            <div form>
+                <form [formGroup]="graph_date_form">
+                    <div formGroupName="humidity">
+                        <date-calendar formControlName="start_date"></date-calendar>
+                    </div>
+                </form>
+            </div>
+            <div content class="px-1 w-full">
+                <apex-chart-core [chartDT]="md_humidity | chartDTFormater:'humidity'"></apex-chart-core>
+            </div>
+        </chart-content-holder>
+    </div>
+    <div class="col-12">
+        <chart-content-holder [cardTitle]="'Wind Speed'"
+            [cardSubTitle]="'Temperature, measure of hotness or coldness '">
+            <div form>
+                <form [formGroup]="graph_date_form">
+                    <div formGroupName="wind_speed">
+                        <date-calendar formControlName="start_date"></date-calendar>
+                    </div>
+                </form>
+            </div>
+            <div content class="px-1 w-full">
+                <apex-chart-core [chartDT]="md_wind_speed | chartDTFormater:'wind_speed'"></apex-chart-core>
+            </div>
+        </chart-content-holder>
+    </div>
+
+</div>

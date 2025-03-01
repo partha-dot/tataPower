@@ -1,0 +1,77 @@
+<div class="grid">
+
+	<div class="col-12">
+		<div class="card">
+			<h5>MQTT Topic</h5>
+
+				<div class="p-fluid p-formgrid grid">
+                    <div class="field col-12 md:col-6">
+						<label htmlFor="firstname2">Select a Device</label>
+					<p-autoComplete [(ngModel)]="selectedDealer" [ngModelOptions]="{standalone: true}" placeholder="Select a device" (onSelect)="setDevice()" [suggestions]="filteredDealer" (completeMethod)="filterDealer($event)" field="device" [dropdown]="true">
+                    </p-autoComplete>
+                    </div>
+                    <div class="field col-12 md:col-2" style="margin-top: 23px;">
+                        <p-button label="Get the link" icon="pi pi-check" (click)="getMQTT()"/>
+                    </div>
+
+
+                    <div class="field col-12 md:col-6">
+                        <textarea
+                        rows="2"
+                        cols="10"
+                        pInputTextarea
+                        [(ngModel)]="MQTTvalue">
+                    </textarea>
+
+                    </div>
+                    <div class="field col-12 md:col-2">
+                        <p-button label="Show API Documentation" icon="pi pi-file-pdf" (click)="showPdfDialog = true" />
+                    </div>
+             </div>
+		</div>
+	</div>
+</div>
+<p-dialog [(visible)]="showPdfDialog" [modal]="true" header="PDF Viewer" [style]="{width: '70vw', height: '90vh'}" [dismissableMask]="true" [closeOnEscape]="true">
+    <iframe [src]="pdfSrc" width="100%" height="100%"></iframe>
+
+    <!-- Button to download the PDF from the modal -->
+    <ng-template pTemplate="footer">
+      <button pButton type="button" label="Download PDF" icon="pi pi-download" (click)="downloadPdf()"></button>
+    </ng-template>
+  </p-dialog>
+<p-toast></p-toast>
+<div class="loader" *ngIf="spinner">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div><div class="overlay" *ngIf="spinner"></div>
+
+        <!-- <p-dialog header="Edit Profile" [modal]="true" [(visible)]="visible" [style]="{ width: '35rem' }">
+            <span class="p-text-secondary block mb-5">Update your information.</span>
+            <div class="flex align-items-center gap-3 mb-3">
+                <label for="username" class="font-semibold w-6rem">User name</label>
+                <input pInputText id="username" [(ngModel)]="userData.client_name" class="flex-auto" autocomplete="off" />
+            </div>
+            <div class="flex align-items-center gap-3 mb-5">
+                <label for="email" class="font-semibold w-6rem">Email</label>
+                <input pInputText id="email" [(ngModel)]="userData.client_email" class="flex-auto" autocomplete="off" />
+            </div>
+            <div class="flex align-items-center gap-3 mb-5">
+                <label for="email" class="font-semibold w-6rem">password</label>
+                <input pInputText id="pass" value="**********" class="flex-auto" autocomplete="off" />
+            </div>
+            <div class="flex align-items-center gap-3 mb-5">
+                <label for="email" class="font-semibold w-6rem">Phone</label>
+                <input pInputText id="phone" [(ngModel)]="userData.client_mobile" class="flex-auto" autocomplete="off" />
+            </div>
+            <div class="flex align-items-center gap-3 mb-5">
+                <label for="email" class="font-semibold w-6rem">Address</label>
+                <input pInputText id="address" [(ngModel)]="userData.client_address" class="flex-auto" autocomplete="off" />
+            </div>
+            <div class="flex justify-content-end gap-2">
+                <p-button label="Cancel" severity="secondary" (onClick)="visible = false" />
+                <p-button label="Save" (onClick)="visible = false" />
+            </div>
+        </p-dialog> -->

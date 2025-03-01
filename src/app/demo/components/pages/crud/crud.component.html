@@ -1,0 +1,375 @@
+<div class="grid">
+    <div class="col-12" >
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="Adjust Amount" icon="pi pi-plus" class="p-button-primary mr-2" (click)="openNew()"></button>
+                        <button pButton pRipple label="Show Paid Bill" icon="pi pi-eye" class="p-button-success mr-2" (click)="ShowPaid()"></button>
+                        <button pButton pRipple label="Show Due Bill" icon="pi pi-eye" class="p-button-danger mr-2" (click)="ShowDue()"></button>
+                        <div class="col-xs-12">
+                            <h5 style="color: rgb(209, 7, 7);" class="m-0">Customer Name: {{custDtls.name.toUpperCase()}}  |  Due Amount: {{dueP_flg?dueAfterPayment:BalanceAmount|currency:"INR"}}</h5>
+                            </div>
+                       <!-- <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button> -->
+                    </div>
+                    
+
+                </ng-template>
+
+                <!-- <ng-template pTemplate="right">
+                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt1.exportCSV()"></button>
+                </ng-template> -->
+            </p-toolbar>
+
+            <p-table *ngIf="showPaidBill" #dt [value]="PaidtransDtls" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['billing_id','payment_flag','transaction_date','amount']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedProducts" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Manage Products</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <!-- <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th> -->
+                        <th pSortableColumn="billing_id">Billing ID<p-sortIcon field="billing_id"></p-sortIcon></th>
+                        <!-- <th pSortableColumn="transaction_id">transaction_id </th> -->
+                        <th style="text-align: center;" pSortableColumn="payment_flag">Payment Status </th>
+                        <th pSortableColumn="transaction_date">Transaction Date </th>
+                        <th pSortableColumn="amount">Amount </th>
+                        <th style="text-align: center;">View Bill Details</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-cust>
+                    <tr>
+                        <!-- <td>
+                            <p-tableCheckbox [value]="transDtls"></p-tableCheckbox>
+                        </td> -->
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">billing_id</span>
+                            {{cust.billing_id}}
+                        </td>
+                        <!-- <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">transaction_id</span>
+                            {{cust.transaction_id}}
+                        </td> -->
+                        <td style="text-align: center;">
+                            <span class="p-column-title">payment_flag</span>
+                            <!-- {{cust.payment_flag=="D"?"DUE":"PAID" }} -->
+                            <ng-container *ngIf="cust.payment_flag=='D'">
+                                <h5 style="color: rgb(218, 10, 10);">DUE</h5>
+                            </ng-container>
+                            <ng-container *ngIf="cust.payment_flag=='P'">
+                                <h5 style="color: rgb(6, 151, 66);">PAID</h5>
+                            </ng-container>
+                            <ng-container *ngIf="cust.payment_flag=='A'">
+                                <h5 style="color: rgb(212, 191, 7);">{{cust.billing_id?"DUE PAYMENT":"COUNTER PAYMENT"}}</h5>
+                            </ng-container>
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">transaction_date</span>
+                            {{cust.transaction_date}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">amount</span>
+                            {{cust.amount |currency:'INR'}}
+                        </td>
+                        <td style="text-align: center;">
+                            <div *ngIf="cust.billing_id">
+                                <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-primary mr-2" (click)="showBill(cust)"></button>
+                                <!-- <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button> -->
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <p-table *ngIf="showDueBill" #dt1 [value]="DuetransDtls" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['billing_id','payment_flag','transaction_date','amount']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedProducts" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt1, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <!-- <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th> -->
+                        <th pSortableColumn="billing_id">Billing ID<p-sortIcon field="billing_id"></p-sortIcon></th>
+                        <!-- <th pSortableColumn="transaction_id">transaction_id </th> -->
+                        <th style="text-align: center;" pSortableColumn="payment_flag">Payment Status </th>
+                        <th pSortableColumn="transaction_date">Transaction Date </th>
+                        <th pSortableColumn="amount">Amount </th>
+                        <th style="text-align: center;">View Bill Details</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-cust>
+                    <tr>
+                        <!-- <td>
+                            <p-tableCheckbox [value]="transDtls"></p-tableCheckbox>
+                        </td> -->
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">billing_id</span>
+                            {{cust.billing_id}}
+                        </td>
+                        <!-- <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">transaction_id</span>
+                            {{cust.transaction_id}}
+                        </td> -->
+                        <td style="text-align: center;">
+                            <span class="p-column-title">payment_flag</span>
+                            <!-- {{cust.payment_flag=="D"?"DUE":"PAID" }} -->
+                            <ng-container *ngIf="cust.payment_flag=='D'">
+                                <h5 style="color: rgb(218, 10, 10);">DUE</h5>
+                            </ng-container>
+                            <ng-container *ngIf="cust.payment_flag=='P'">
+                                <h5 style="color: rgb(6, 151, 66);">PAID</h5>
+                            </ng-container>
+                            <ng-container *ngIf="cust.payment_flag=='A'">
+                                <h5 style="color: rgb(212, 191, 7);">{{cust.billing_id?"DUE PAYMENT":"COUNTER PAYMENT"}}</h5>
+                            </ng-container>
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">transaction_date</span>
+                            {{cust.transaction_date}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">amount</span>
+                            {{cust.amount |currency:'INR'}}
+                        </td>
+                        <td style="text-align: center;">
+                            <div *ngIf="cust.billing_id">
+                                <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-primary mr-2" (click)="showBill(cust)"></button>
+                                <!-- <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button> -->
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog [(visible)]="productDialog" [style]="{width: '550px'}" header="Deposit amount into the customer account" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field">
+                        <label for="name">Name</label>
+                        <input type="text" pInputText id="name" [(ngModel)]="custDtls.name" disabled />
+                    </div>
+                    <div class="field">
+                        <label for="name">Amount</label>
+                        <p-inputNumber [(ngModel)]="depositAmount"
+                         required autofocus mode="currency" inputId="currency-india" currency="INR" currencyDisplay="code" locale="en-IN" [ngClass]="{'ng-invalid ng-dirty' : submitted && !custDtls.name}"> </p-inputNumber>
+                        
+                    </div>
+                
+                
+                <!-- <img [src]="'assets/demo/images/product/' + product.image" [alt]="product.image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="product.image"> -->
+                <!-- <div class="field">
+                    <label for="name">Name</label>
+                    <input type="text" pInputText id="name" [(ngModel)]="product.name" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !product.name}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !product.name">Name is required.</small>
+                </div>
+                <div class="field">
+                    <label for="description">Description</label>
+                    <textarea id="description" pInputTextarea [(ngModel)]="product.description" required rows="3" cols="20"></textarea>
+                </div>
+                <div class="field">
+                    <label for="status">Inventory Status</label>
+                    <p-dropdown [(ngModel)]="product.inventoryStatus" inputId="inventoryStatus" optionValue="label" [options]="statuses" placeholder="Select">
+                        <ng-template pTemplate="selectedItem">
+                            <span *ngIf="product && product.inventoryStatus" [class]="'product-badge status-' + product.inventoryStatus.toString().toLowerCase()">{{product.inventoryStatus}}</span>
+                        </ng-template>
+                        <ng-template let-option pTemplate="item">
+                            <span [class]="'product-badge status-' + option.value">{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+
+                <div class="field">
+                    <label class="mb-3">Category</label>
+                    <div class="formgrid grid">
+                        <div class="field-radiobutton col-6">
+                            <p-radioButton id="category1" name="category" value="Accessories" [(ngModel)]="product.category"></p-radioButton>
+                            <label for="category1">Accessories</label>
+                        </div>
+                        <div class="field-radiobutton col-6">
+                            <p-radioButton id="category2" name="category" value="Clothing" [(ngModel)]="product.category"></p-radioButton>
+                            <label for="category2">Clothing</label>
+                        </div>
+                        <div class="field-radiobutton col-6">
+                            <p-radioButton id="category3" name="category" value="Electronics" [(ngModel)]="product.category"></p-radioButton>
+                            <label for="category3">Electronics</label>
+                        </div>
+                        <div class="field-radiobutton col-6">
+                            <p-radioButton id="category4" name="category" value="Fitness" [(ngModel)]="product.category"></p-radioButton>
+                            <label for="category4">Fitness</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="price">Price</label>
+                        <p-inputNumber id="price" [(ngModel)]="product.price" mode="currency" currency="INR" locale="en-US"></p-inputNumber>
+                    </div>
+                    <div class="field col">
+                        <label for="quantity">Quantity</label>
+                        <p-inputNumber id="quantity" [(ngModel)]="product.quantity"></p-inputNumber>
+                    </div>
+                </div> -->
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteProductDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="product">Are you sure you want to delete <b>{{product.name}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteProductDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteProductsDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>Are you sure you want to delete selected products?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteProductsDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+    <div class="col-12" [hidden]="!dueP_flg">
+        <div class="card" id="bill2" hidden>
+          <div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+			<div class="container2">
+				<div class="image">
+					<img src="./assets/demo/images/billing/comp_logo.jpg" class="paid" >
+				</div>
+				<div class="text">
+					<h4 style="margin-left: 4%;">Shridharpur, West Bengal 721632, India, West Bengal,<br>
+						Mobile: 8535999129</h4>
+				</div>
+				<div style="width: 20px !important;">
+					<svg #barcodeSVG ></svg>
+				</div>
+			  </div>
+    		
+    			
+    		
+			<div class="text-right" style="background-color: beige;width: 100%;border-top:5px solid burlywood; padding-right: 5px;">
+				
+			</div>
+    		<div class="row" style="margin-left: 4%;">
+                <div class="col-xs-12 text-right"><br>
+    
+                    <strong>Date: {{payment_Dt}}</strong>               
+                </div>
+    			<div class="col-xs-6">
+    				<p>
+    			    <strong>Customer Name: </strong>{{this.custDtls.name}}<br>
+    				<strong>Mobile Number: </strong>{{this.custDtls.mobile_no}}<br>
+    				<strong>Address: </strong>{{this.custDtls.adress}}<br>
+                    <!-- {{CustomerDtls.name}}<br> -->
+                    </p>
+    			</div>
+                
+    		</div>
+    	</div>
+    </div>
+    
+    <div class="row">
+    	<div class="field col-12 md:col-12">
+    		<div class="panel panel-default">
+    			<div class="panel-heading">
+    				<h3 class="card flex justify-content-center"><strong>Payment Receipt</strong></h3>
+    			</div>
+                    <p-table #dt2 >
+                        <ng-template pTemplate="header" #hdd>
+                                <tr style="background-color: rgb(200, 195, 188);">
+        							<td class="text-left" style="padding-left:2%"><strong>Payment</strong></td>
+        							<td class="text-right" style="padding-right:2%;"><strong>Price</strong></td>
+        							<!-- <td class="text-right" style="padding-right:2%;"><strong>Totals</strong></td> -->
+                                </tr>
+                        </ng-template>
+                        <ng-template pTemplate="footer">
+							<!-- foreach ($order->lineItems as $line) or some such thing here -->
+							<tr>
+								<td class="text-left">Due Amount:</td>
+								<td class="text-right">{{BalanceAmount|currency:"INR"}}</td>
+								<!-- <td class="text-right">{{ 1000 |currency:"INR"}}</td> -->
+							</tr>
+                            <tr>
+								<td class="text-left">Paid Amount:</td>
+								<td class="text-right">{{ depositAmount|currency:"INR"}}</td>
+								<!-- <td class="text-right">{{ 2000 |currency:"INR"}}</td> -->
+							</tr>
+							
+					</ng-template> 
+						<!-- foreach ($order->lineItems as $line) or some such thing here -->
+						
+						
+				
+    					</p-table>
+
+                        
+    		<div class="row">
+    			<div class="col-xs-6 text-right"><br>
+
+                    <strong>Total Due:</strong> <b>{{dueAfterPayment |currency:"INR"  }}</b><br><br>
+					<!-- <div *ngIf="Paid">
+						<img src="./assets/demo/images/access/paid.png" class="paid" >
+					</div>
+					<div *ngIf="Due">
+                    	<img src="./assets/demo/images/access/due.png" class="due" >
+					</div> -->
+    			</div>
+				<!-- <div class="col-xs-6 text-left"><br>
+
+                    <strong>TERMS AND CONDITIONS</strong> <br>
+					<p> 1. Goods once sold will not be taken back or exchanged<br>
+						2. Warranty is not liable if the goods are Burnt,<br>
+						Broken, Lequid Damage or missing warranty<br>
+						sticker.<br>
+						3. Subject to "West Bengal" jurisdiction only.</p>
+					
+    			</div> -->
+                
+    		</div>
+    				</div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div  class="flex justify-content-center" >
+        <div class="field col-12 md:col-2">
+            <button pButton pRipple printSectionId="bill2" [useExistingCss]="true" ngxPrint   label="Print" icon="pi pi-print" class="p-button-primary"></button>
+			
+		</div>
+        </div>
+    </div>
+</div>
+<div class="loader" *ngIf="spinner">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div><div class="overlay" *ngIf="spinner"></div>

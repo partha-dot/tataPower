@@ -1,0 +1,130 @@
+
+    <div class="card">
+        <div class="cover-bg"></div>
+        <div class="user-info-wrap">
+          <div class="user-photo"></div>
+          <div class="user-info">
+            <div class="user-name">{{userName}}</div>
+
+          </div>
+        </div><br>
+        <div class="social">
+            <div class="social-icons">
+              <a class="fa">
+                <span class="pi pi-facebook"></span>
+              </a>
+              <a class="fa">
+                <span class="pi pi-whatsapp"></span>
+              </a>
+              <a class="fa">
+                <span class="pi pi-youtube"></span>
+              </a>
+              <a class="fa">
+                <span class="pi pi-google"></span>
+              </a>
+            </div>
+
+            <div class="message">
+              <a href="" class="fa">
+                <i class="fa fa-envelope-o"></i>
+              </a>
+            </div>
+          </div>
+          <br>
+        <!-- <div class="user-bio">
+                <li><b>Password: </b>********************</li>
+                <li><b>Address: </b>{{userData?.client_address}}</li>
+                <li><b>Mobile: </b>{{userData?.client_mobile}}</li>
+                <li><b>Created at: </b>{{userData?.created_at}}</li>
+
+        </div> -->
+        <hr>
+        <div >
+            <div class="message" style="float: right;">
+               <a (click)="editUser()"><span class="pi pi-user-edit" style="padding-right: 10px;"></span>Edit Profile
+               </a>
+              </div>
+            <div class="user-title"> <span class="pi pi-lock"></span>       ****************
+
+                    <a (click)="abc()">Change Password</a>
+
+            </div>
+            <div class="user-title"> <span class="pi pi-envelope"></span>  {{     email}}</div>
+            <div class="user-title"> <span class="pi pi-phone"></span>  {{     userData?.client_mobile}}</div>
+            <div class="user-title"> <span class="pi pi-map-marker"></span>  {{     userData?.client_address}}</div>
+            <div class="user-title"> <span class="pi pi-clock"></span>  {{     userData?.created_at}}</div>
+
+        </div>
+
+        <p-dialog header="Edit Profile" [modal]="true" [(visible)]="visible" [style]="{ width: '35rem' }">
+            <span class="p-text-secondary block mb-5">Update your profile information.</span>
+            <div class="flex align-items-center gap-3 mb-3">
+                <label for="username" class="font-semibold w-6rem">Upload Profile Picture</label>
+                <p-fileUpload
+                name="demo[]"
+                url="https://www.primefaces.org/cdn/api/upload.php"
+                (onUpload)="onUpload($event)"
+                [multiple]="false"
+                accept="image/*"
+                maxFileSize="1000000">
+                    <ng-template pTemplate="content">
+                        <ul *ngIf="uploadedFiles.length">
+                            <li *ngFor="let file of uploadedFiles">
+                                {{ file.name }} - {{ file.size }} bytes
+                            </li>
+                        </ul>
+                    </ng-template>
+            </p-fileUpload>
+            </div>
+            <div class="flex align-items-center gap-3 mb-3">
+                <label for="username" class="font-semibold w-6rem">User name</label>
+                <input pInputText id="username" [(ngModel)]="userData.client_name" class="flex-auto" autocomplete="off" />
+            </div>
+            <div class="flex align-items-center gap-3 mb-5">
+                <label for="email" class="font-semibold w-6rem">Email</label>
+                <input pInputText id="email" [(ngModel)]="userData.client_email" class="flex-auto" autocomplete="off" />
+            </div>
+            <!-- <div class="flex align-items-center gap-3 mb-5">
+                <label for="email" class="font-semibold w-6rem">password</label>
+                <input pInputText id="pass" value="**********" class="flex-auto" autocomplete="off" />
+            </div> -->
+            <div class="flex align-items-center gap-3 mb-5">
+                <label for="email" class="font-semibold w-6rem">Phone</label>
+                <input pInputText id="phone" [(ngModel)]="userData.client_mobile" class="flex-auto" autocomplete="off" />
+            </div>
+            <div class="flex align-items-center gap-3 mb-5">
+                <label for="email" class="font-semibold w-6rem">Address</label>
+                <input pInputText id="address" [(ngModel)]="userData.client_address" class="flex-auto" autocomplete="off" />
+            </div>
+
+            <div class="flex justify-content-end gap-2">
+                <p-button label="Cancel" severity="secondary" (onClick)="visible = false" />
+                <p-button label="Save" (onClick)="visible = false" />
+            </div>
+        </p-dialog>
+        <p-dialog header="Change Password" [modal]="true" [(visible)]="visible2" [style]="{ width: '35rem' }">
+            <span class="p-text-secondary block mb-5">Change your current password.</span>
+
+            <div class="flex align-items-center gap-3 mb-3">
+                <label for="username" class="font-semibold w-6rem">Current Password</label>
+                <p-password [(ngModel)]="userData.o_password" class="flex-auto" [toggleMask]="true" />
+            </div>
+            <div class="flex align-items-center gap-3 mb-5">
+                <label for="email" class="font-semibold w-6rem">New Password</label>
+                <p-password [(ngModel)]="userData.n_password" class="flex-auto" [toggleMask]="true" />
+            </div>
+            <!-- <div class="flex align-items-center gap-3 mb-5">
+                <label for="email" class="font-semibold w-6rem">password</label>
+                <input pInputText id="pass" value="**********" class="flex-auto" autocomplete="off" />
+            </div> -->
+            <div class="flex align-items-center gap-3 mb-5">
+                <label for="email" class="font-semibold w-6rem">Confirm New Password</label>
+                <p-password [(ngModel)]="userData.cn_password" class="flex-auto" [toggleMask]="true" />
+
+            </div>
+
+            <div class="flex justify-content-end gap-2">
+                <p-button label="Cancel" severity="secondary" (onClick)="visible2 = false" />
+                <p-button label="Save" (onClick)="visible2 = false" />
+            </div>
+        </p-dialog>

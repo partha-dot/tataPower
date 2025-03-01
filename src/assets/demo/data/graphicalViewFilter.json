@@ -1,0 +1,14 @@
+[
+    {
+        "name":"Today",
+        "code":"D"
+    },
+    {
+        "name":"Monthly",
+        "code":"M"
+    },
+    {
+        "name":"Yearly",
+        "code":"Y"
+    }
+]

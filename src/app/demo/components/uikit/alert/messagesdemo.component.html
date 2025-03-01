@@ -1,0 +1,202 @@
+<!-- <app-chartsdemo></app-chartsdemo> -->
+<div class="card">
+    <p-toast></p-toast>
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="Create new alert" icon="pi pi-plus" class="p-button-primary mr-2" (click)="openNew()"></button>
+            <!-- <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button> -->
+        </ng-template>
+
+        <!-- <ng-template pTemplate="right">
+            <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+        </ng-template> -->
+    </p-toolbar>
+
+    <!-- <p-table
+        #dt
+        [value]="products"
+        [rows]="4"
+        [paginator]="true"
+        [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
+        [tableStyle]="{ 'min-width': '75rem' }"
+        [(selection)]="selectedProducts"
+        [rowHover]="true"
+        dataKey="company_id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [showCurrentPageReport]="true"
+    > -->
+	<p-table
+	#dt
+	[value]="models"
+	[rows]="4"
+	[paginator]="true"
+	[globalFilterFields]="['organization_id','device', 'unit_name', 'alert_type', 'alert_status']"
+	[tableStyle]="{ 'min-width': '75rem' }"
+	[(selection)]="selectedProducts"
+	[rowHover]="true"
+	dataKey="device"
+	currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+	[showCurrentPageReport]="true"
+    >
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Manage Alerts</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                
+				<!-- <th style="text-align: center;">Sl No.</th> -->
+                <th pSortableColumn="organization_id" >Organization<p-sortIcon field="organization_id"></p-sortIcon></th>
+                <th pSortableColumn="device" >Device<p-sortIcon field="device"></p-sortIcon></th>
+                <th pSortableColumn="unit_name" >Unit Name <p-sortIcon field="unit_name"></p-sortIcon></th>
+                <th pSortableColumn="alert_type" >Alert Type <p-sortIcon field="alert_type"></p-sortIcon></th>
+                <th pSortableColumn="alert_status" >Alert Status <p-sortIcon field="alert_status"></p-sortIcon></th>
+                <th pSortableColumn="alert_value" >Alert Value <p-sortIcon field="alert_value"></p-sortIcon></th>
+                <th pSortableColumn="alert_email" >Email <p-sortIcon field="alert_email"></p-sortIcon></th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            
+        </ng-template>
+        <ng-template pTemplate="body" let-alert >
+			<tr>
+                <td>{{alert.organization_id}}</td>
+				<td>{{ alert.device }}</td>
+				<td>{{ alert.unit_name }}</td>
+				<td>{{ alert.alert_type=="1CL"?"Cretical Low":alert.alert_type=="2L"?"Low":alert.alert_type=="3H"?"High":"Cretical High" }}</td>
+				<!-- <td>{{ alert.alert_status }}</td> -->
+                <!-- <td style="text-align: left;">
+					<p-badge  [severity]="alert.alert_status=='Y'?'success':'danger '">{{alert.alert_status=='Y'?'Active':'Deactive'}}</p-badge>
+				</td> -->
+                <th style="text-align: center;">
+					<p-badge [value]="alert.alert_status=='Y'?'ON':'OFF'" [severity]="alert.alert_status=='Y'?'success':'danger'"></p-badge>
+				</th>
+				<td>{{ alert.alert_value }}</td>
+				<td>{{ alert.alert_email }}</td>
+				<!-- <td>{{ alert.model_name }}</td>
+				<td>{{ alert.purchase_rate |currency:"INR"}}</td>
+				<td>{{ alert.purchase_date }}</td>
+				<td>{{ alert.warranty_expired }}</td>
+				<td>{{ alert.sales_rate |currency:"INR"}}</td>
+				<td>{{ alert.cgst_p}}%</td>
+				<td>{{ alert.sgst_p}}%</td> -->
+				<!-- <td>
+					<button type="button" pButton pRipple icon="pi pi-pencil" (click)="selectProduct(alert)"></button>
+				</td>-->
+				<!-- <td style="text-align: center;">
+					<button type="button" pButton pRipple icon="pi pi-eye" (click)="show(alert)"></button>
+				</td>  -->
+				<td style="text-align: center;">
+					<button type="button" pButton pRipple icon="pi pi-pencil" (click)="editAlert(alert)"></button>
+				</td> 
+                <td style="text-align: center;">
+					<button type="button" pButton pRipple icon="pi pi-trash" class=" p-button-danger" (click)="deleteAlert(alert)"></button>
+				</td> 
+			</tr>
+		</ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">In total there are {{ models ? models.length : 0 }} Alerts.</div>
+        </ng-template>
+    </p-table>
+</div>
+<p-dialog [(visible)]="productDialog" [style]="{ width: '600px', height:'750px'}" header="Alert Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <from [formGroup]="unitForm">
+            
+        <!-- <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.image" class="block m-auto pb-3" *ngIf="product.image" /> -->
+        <div class="field">
+            <label for="company">Select Organization<span style="color: red;">*</span></label>
+                    <!-- <p-dropdown formControlName="organization_id" [options]="products" optionLabel="organization_name" placeholder="Select a Organization"></p-dropdown> -->
+                    <select formControlName="organization_id"  style="width: 100%;height: 39px;border-color: lightgray;border-radius: 5px;">
+                        <option selected disabled [value]="0">Select an Organization</option>
+                        <option *ngFor="let dt of products" [value]="dt.organization_id">{{dt.organization_name}}</option>
+                     </select>
+        </div>
+        <div class="field">
+            <label for="product">Unit<span style="color: red;">*</span></label>
+            <select formControlName="unit_id" style="width: 100%;height: 39px;border-color: lightgray;border-radius: 5px;">
+                <option selected disabled value="0">Select a Unit</option>
+                <option *ngFor="let dt of unitList" [value]="dt.unit_id">{{dt.unit_name}}</option>
+             </select>
+        </div>
+        <div class="field">
+            <label for="company">Select Device<span style="color: red;">*</span></label>
+            <!-- <p-dropdown formControlName="device_id" [options]="cities" optionLabel="device" placeholder="Select a Device"></p-dropdown> -->
+            <select formControlName="device_id" style="width: 100%;height: 39px;border-color: lightgray;border-radius: 5px;">
+                <option selected disabled value="0">Select a Device</option>
+                <option *ngFor="let dt of cities" [value]="dt.device_id">{{dt.device}}</option>
+             </select>
+        </div>
+        <div class="field">
+            <label for="product">Email<span style="color: red;">*</span></label>
+            <input type="text" pInputText id="email" placeholder="Enter a mail id" formControlName="email" required  />
+        </div>
+        <div class="field">
+            <label for="product">Alert Type</label>
+            <div class="flex flex-column md:flex-row gap-3"*ngIf="editMode">
+               <div style="display: flex;" [hidden]="!low2"><p-inputSwitch [ngModelOptions]="{standalone: true}" [(ngModel)]="low" ></p-inputSwitch> <h5 style="padding: 3px;margin: 0px;font-size: 14px;">Low</h5></div> <br>
+                <div style="display: flex;" [hidden]="!high2"><p-inputSwitch [ngModelOptions]="{standalone: true}" [(ngModel)]="high"></p-inputSwitch> <h5 style="padding: 3px;margin: 0px;font-size: 14px;">High</h5> </div><br>
+                <div style="display: flex;" [hidden]="!c_low2"><p-inputSwitch [ngModelOptions]="{standalone: true}" [(ngModel)]="c_low"></p-inputSwitch> <h5 style="padding: 3px;margin: 0px;font-size: 14px;">Critical Low</h5> </div><br>
+                <div style="display: flex;" [hidden]="!c_high2"><p-inputSwitch [ngModelOptions]="{standalone: true}" [(ngModel)]="c_high"></p-inputSwitch>  <h5 style="padding: 3px;margin: 0px;font-size: 14px;">Critical High</h5></div>
+            </div>
+            <div class="flex flex-column md:flex-row gap-3" *ngIf="!editMode">
+                <div style="display: flex;"><p-inputSwitch [ngModelOptions]="{standalone: true}" [(ngModel)]="low" ></p-inputSwitch> <h5 style="padding: 3px;margin: 0px;font-size: 14px;">Low</h5> </div> <br>
+                 <div style="display: flex;"><p-inputSwitch [ngModelOptions]="{standalone: true}" [(ngModel)]="high"></p-inputSwitch> <h5 style="padding: 3px;margin: 0px;font-size: 14px;">High</h5> </div><br>
+                 <div style="display: flex;"><p-inputSwitch [ngModelOptions]="{standalone: true}" [(ngModel)]="c_low"></p-inputSwitch> <h5 style="padding: 3px;margin: 0px;font-size: 14px;">Critical Low</h5> </div><br>
+                 <div style="display: flex;"><p-inputSwitch [ngModelOptions]="{standalone: true}" [(ngModel)]="c_high"></p-inputSwitch> <h5 style="padding: 3px;margin: 0px;font-size: 14px;">Critical High</h5> </div>
+             </div>
+           
+            <div class="flex flex-column md:flex-row gap-1">
+                <div class="col-6 lg:col-6 xl:col-6" *ngIf="low">
+                    <label for="product">Low</label>
+                    <p-inputNumber placeholder="Enter Low Value" formControlName="low_val" [minFractionDigits]="2"  pTooltip="Below this value Alert will generated"  required /> 
+                    <!-- <input type="text" pInputText id="email" formControlName="low_val" placeholder="Enter Low Value" pTooltip="Below this value Alert will generated"  required  /> -->
+                </div>
+                <div class="col-6 lg:col-6 xl:col-6"  *ngIf="high">
+                    <label for="product">High</label>
+                    <p-inputNumber placeholder="Enter High Value" formControlName="high_val" [minFractionDigits]="2"  pTooltip="Below this value Alert will generated"  required /> 
+
+                    <!-- <input type="text" pInputText id="email" formControlName="high_val" placeholder="Enter High Value" required  pTooltip="Above this value Alert will generated"/> -->
+                </div>
+            </div>
+            <div class="flex flex-column md:flex-row gap-1">
+                <div class="col-6 lg:col-6 xl:col-6"  *ngIf="c_high">
+                    <label for="product">Critical High</label>
+                    <p-inputNumber placeholder="Enter Critical High Value" formControlName="c_high_val" [minFractionDigits]="2"  pTooltip="Below this value Alert will generated"  required /> 
+
+                    <!-- <input type="text" pInputText id="email" formControlName="c_high_val" placeholder="Enter Critical High Value" required pTooltip="Above this value Alert will generated" /> -->
+                </div>
+                <div class="col-6 lg:col-6 xl:col-6" *ngIf="c_low">
+                    <label for="product">Critical low</label>
+                    <p-inputNumber placeholder="Enter Critical low Value" formControlName="c_low_val" [minFractionDigits]="2"  pTooltip="Below this value Alert will generated"  required /> 
+
+                    <!-- <input type="text" pInputText id="email" formControlName="c_low_val" placeholder="Enter Critical low Value" required  pTooltip="Below this value Alert will generated"/> -->
+                </div>
+            </div>
+        </div>
+       
+        
+        </from>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog> 
+
+<div class="loader" *ngIf="spinner">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div><div class="overlay" *ngIf="spinner"></div>
