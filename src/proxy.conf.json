@@ -1,6 +1,6 @@
 {
     "/api": {
-"target": "https://wsapi.iotblitz.com",
+"target": "https://tatapw.iotblitz.com",
 "secure": false
 }
   }

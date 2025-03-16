@@ -14,8 +14,9 @@ export class WebsocketService {
   device_id:number
   device:string
   resData:string
+//   wss://tatapw.iotblitz.com/api/ws_routes/ws/WMS/1/1/1
 //   private baseURL:string="ws://13.49.80.167:8001/api/ws_routes/ws/WMS/"
-  private baseURL:string="wss://wsapi.iotblitz.com/api/ws_routes/ws/WMS/"
+  private baseURL:string="wss://tatapw.iotblitz.com/api/ws_routes/ws/WMS/"
 
   constructor(private router: Router,private api:ApiService,private http:HttpClient) { }
 

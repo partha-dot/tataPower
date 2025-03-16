@@ -11,7 +11,7 @@ export class ApiService {
   // baseUrl = 'http://localhost:8000/api';
   // baseUrl = 'https://iot.wrongcode.in/backend/api';
   // baseUrl = 'http://51.20.92.59:8000/api';
-  baseUrl = 'https://wsapi.iotblitz.com/api';
+  baseUrl = 'https://tatapw.iotblitz.com/api';
   token:any;
     baseURL: any;
   constructor(private http: HttpClient,@Inject('BASE_URL') private API_URL:string){ }
